@@ -54,6 +54,14 @@ export function resolveKnowledgeCutoff(card, scenario) {
   const sceneOrd = dateOrdinal(scenario.date);
   const deathOrd = dateOrdinal(card.default_knowledge_cutoff);
 
+  // A scene "outside of time" displaces everyone in it, whatever its nominal date.
+  // Without this, a cross-era scenario that borrows one participant's death date as its
+  // placeholder date would leave exactly that participant undisplaced — Caesar on Mars
+  // would reason as a man having an ordinary day in 44 BCE.
+  if (scenario.out_of_time) {
+    return { date: card.default_knowledge_cutoff, displaced: true };
+  }
+
   if (sceneOrd === null || deathOrd === null) {
     return { date: card.default_knowledge_cutoff, displaced: false };
   }

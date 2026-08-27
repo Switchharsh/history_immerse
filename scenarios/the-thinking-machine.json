@@ -5,16 +5,26 @@
   "date": "1519-05-02",
   "date_label": "outside of time",
   "setting": "A workshop bench on which someone has left a device that answers when spoken to. It is warm, it has no visible mechanism, and it will not explain itself. Three people who spent their lives insisting on evidence have been left alone with it.",
-  "participants_hint": ["da-vinci", "marie-curie", "socrates"],
+  "participants_hint": [
+    "da-vinci",
+    "marie-curie",
+    "socrates"
+  ],
   "min_cast": 2,
   "max_cast": 3,
   "stakes": "Whether the thing on the bench is thinking, and how any of them could possibly tell.",
-  "issue_tags": ["knowledge", "science_and_ownership", "death", "flight"],
+  "issue_tags": [
+    "knowledge",
+    "science_and_ownership",
+    "death",
+    "flight"
+  ],
   "roles_in_scene": {
     "da-vinci": "Wants to open it, and is already sketching what he thinks is inside",
     "marie-curie": "Wants to know what it is made of and what it emits before anyone touches it again",
     "socrates": "Wants to ask it what it means by 'know', and expects it to fail"
   },
   "ground_truth": [],
-  "opening_line": "A device that speaks, three people who do not accept things on authority, and no manual."
+  "opening_line": "A device that speaks, three people who do not accept things on authority, and no manual.",
+  "out_of_time": true
 }

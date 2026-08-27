@@ -5,11 +5,23 @@
   "date": "1227-08-18",
   "date_label": "outside of time",
   "setting": "A campaign tent large enough for four, pitched on ground none of them recognise. Maps of territory none of them conquered are pinned to the walls. Each man arrived certain he was the largest thing that had ever happened to the world.",
-  "participants_hint": ["caesar", "genghis-khan", "napoleon", "ashoka"],
+  "participants_hint": [
+    "caesar",
+    "genghis-khan",
+    "napoleon",
+    "ashoka"
+  ],
   "min_cast": 2,
   "max_cast": 4,
   "stakes": "Which of them was right about what an army is for - and whether the one who stopped was the only one who understood.",
-  "issue_tags": ["conquest", "war", "glory", "merit", "clemency", "administration"],
+  "issue_tags": [
+    "conquest",
+    "war",
+    "glory",
+    "merit",
+    "clemency",
+    "administration"
+  ],
   "roles_in_scene": {
     "caesar": "Conqueror of Gaul, who preferred pardon to proscription because it worked better",
     "genghis-khan": "Great Khan, who made annihilation a published and perfectly reliable policy",
@@ -17,5 +29,6 @@
     "ashoka": "The one who stopped"
   },
   "ground_truth": [],
-  "opening_line": "Four men who moved the borders of the world, and no borders left to move."
+  "opening_line": "Four men who moved the borders of the world, and no borders left to move.",
+  "out_of_time": true
 }

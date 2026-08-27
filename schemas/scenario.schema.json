@@ -3,12 +3,31 @@
   "$id": "parley/scenario.schema.json",
   "title": "Scenario card",
   "type": "object",
-  "required": ["id", "title", "type", "date", "setting", "stakes"],
+  "required": [
+    "id",
+    "title",
+    "type",
+    "date",
+    "setting",
+    "stakes"
+  ],
   "additionalProperties": false,
   "properties": {
-    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-    "title": { "type": "string", "minLength": 3 },
-    "type": { "enum": ["historical", "hypothetical", "custom"] },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "type": {
+      "enum": [
+        "historical",
+        "hypothetical",
+        "custom"
+      ]
+    },
     "date": {
       "type": "string",
       "pattern": "^-?[0-9]{1,4}-[0-9]{2}-[0-9]{2}$",
@@ -18,30 +37,62 @@
       "type": "string",
       "description": "How the date should be spoken in prose, e.g. '28 November 1943'."
     },
-    "setting": { "type": "string", "minLength": 20 },
-    "participants_hint": { "type": "array", "items": { "type": "string" } },
-    "min_cast": { "type": "integer", "minimum": 2 },
-    "max_cast": { "type": "integer", "maximum": 6 },
-    "stakes": { "type": "string", "minLength": 10 },
+    "setting": {
+      "type": "string",
+      "minLength": 20
+    },
+    "participants_hint": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "min_cast": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "max_cast": {
+      "type": "integer",
+      "maximum": 6
+    },
+    "stakes": {
+      "type": "string",
+      "minLength": 10
+    },
     "issue_tags": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Matched against character `positions` keys to surface relevant stances."
     },
     "roles_in_scene": {
       "type": "object",
       "description": "Per-character-id role line. Falls back to a generic line.",
-      "additionalProperties": { "type": "string" }
+      "additionalProperties": {
+        "type": "string"
+      }
     },
     "ground_truth": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Beats the director may inject, in rough order. Empty for hypothetical/custom."
     },
     "opening_line": {
       "type": "string",
       "description": "Narrator text shown before the first turn."
     },
-    "sources": { "type": "array", "items": { "type": "string" } }
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "out_of_time": {
+      "type": "boolean",
+      "description": "The scene sits outside history. Every participant is displaced regardless of the nominal date, and reasons from their own era's frame."
+    }
   }
 }

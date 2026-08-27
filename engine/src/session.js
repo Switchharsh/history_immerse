@@ -109,6 +109,8 @@ async function buildCustomScenario({ text, cards }) {
     stakes: draft.stakes || 'Unstated.',
     date: draft.date || '1900-01-01',
     date_label: draft.date_label || 'outside of time',
+    // A user-authored cross-era meeting displaces its cast the same way a curated one does.
+    out_of_time: /outside of time/i.test(draft.date_label ?? '') || !draft.date_label,
     opening_line: draft.opening_line || null,
     issue_tags: Array.isArray(draft.issue_tags) ? draft.issue_tags : [],
     participants_hint: cards.map((c) => c.id),

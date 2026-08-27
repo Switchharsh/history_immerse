@@ -5,11 +5,21 @@
   "date": "-0044-03-15",
   "date_label": "outside of time",
   "setting": "A pressurised habitat on the fourth planet. Red dust against the viewport, a horizon that curves wrong, and a sun too small. The air is breathable, the gravity is light, and none of the three occupants has any framework that accounts for where they are standing.",
-  "participants_hint": ["caesar", "cleopatra", "da-vinci"],
+  "participants_hint": [
+    "caesar",
+    "cleopatra",
+    "da-vinci"
+  ],
   "min_cast": 2,
   "max_cast": 3,
   "stakes": "What three people from before the telescope conclude about a red world they are standing on - and who ends up in charge of it.",
-  "issue_tags": ["conquest", "knowledge", "egypt", "rome", "flight"],
+  "issue_tags": [
+    "conquest",
+    "knowledge",
+    "egypt",
+    "rome",
+    "flight"
+  ],
   "roles_in_scene": {
     "caesar": "Reasons from Roman cosmology and Roman logistics: whose land is this, how is it held, and how many men would it take",
     "cleopatra": "Asks what grows here, what it is worth, and who else knows about it",
@@ -17,5 +27,8 @@
   },
   "ground_truth": [],
   "opening_line": "Red dust, a small sun, and three people for whom the planets are still wandering lights.",
-  "sources": ["Knowledge-cutoff showcase: none of the cast may reason with modern astronomy."]
+  "sources": [
+    "Knowledge-cutoff showcase: none of the cast may reason with modern astronomy."
+  ],
+  "out_of_time": true
 }

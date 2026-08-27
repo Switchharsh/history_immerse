@@ -27,5 +27,6 @@
     "ashoka": "An emperor who conquered, was appalled, and carved his remorse into rock"
   },
   "ground_truth": [],
-  "opening_line": "No date, no jurisdiction, no appeal. Three rulers of empires, and one question: what was it worth?"
+  "opening_line": "No date, no jurisdiction, no appeal. Three rulers of empires, and one question: what was it worth?",
+  "out_of_time": true
 }

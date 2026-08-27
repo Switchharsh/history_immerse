@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+
+/*
+ * Parchment and brass, not generic SaaS. The palette is warm-neutral with a single
+ * metallic accent; everything else earns its colour from the portraits.
+ */
+@theme {
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-body: 'EB Garamond', Georgia, serif;
+  --font-ui: 'Inter', system-ui, sans-serif;
+
+  --color-ink: #1a1512;
+  --color-ink-soft: #4a3f36;
+  --color-parchment: #f2e8d5;
+  --color-parchment-deep: #e4d5b7;
+  --color-vellum: #fdfaf3;
+
+  --color-brass: #b8894a;
+  --color-brass-bright: #d9a961;
+  --color-brass-deep: #7a5a2e;
+
+  --color-oxblood: #6b2229;
+  --color-verdigris: #4a6b5f;
+
+  --color-night: #14100c;
+  --color-night-soft: #241d16;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-night);
+  color: var(--color-parchment);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Aged-paper tooth. Cheap, tiles forever, and stops flat fills reading as a web app. */
+.bg-parchment-texture {
+  background-color: var(--color-parchment);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgb(0 0 0 / 0.035) 0.5px, transparent 1px),
+    radial-gradient(circle at 65% 70%, rgb(0 0 0 / 0.03) 0.5px, transparent 1px),
+    radial-gradient(circle at 85% 35%, rgb(0 0 0 / 0.025) 0.5px, transparent 1px);
+  background-size: 13px 13px, 21px 21px, 17px 17px;
+}
+
+.bg-night-texture {
+  background-color: var(--color-night);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgb(184 137 74 / 0.10), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgb(107 34 41 / 0.10), transparent 70%);
+}
+
+.rule-brass {
+  border-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-brass) 20%,
+      var(--color-brass-bright) 50%,
+      var(--color-brass) 80%,
+      transparent
+    )
+    1;
+}
+
+/* The caret that trails streaming text. */
+@keyframes caret-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+.caret::after {
+  content: '';
+  display: inline-block;
+  width: 0.5ch;
+  height: 1.05em;
+  margin-left: 0.12em;
+  vertical-align: -0.16em;
+  background: currentColor;
+  animation: caret-pulse 1.05s ease-in-out infinite;
+}
+
+::selection {
+  background: var(--color-brass);
+  color: var(--color-night);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-brass-bright);
+  outline-offset: 2px;
+}
+
+/* Thin brass scrollbars so the stage doesn't get a chunky OS gutter. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brass-deep) transparent;
+}
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: var(--color-brass-deep);
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
