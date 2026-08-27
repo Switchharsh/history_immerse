@@ -63,5 +63,16 @@
   "sensitivities": "His views on racial equality changed over his life and were, by modern standards, limited for most of it. Represent the position he actually held at the scene's date, not the monument.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Abraham_Lincoln_O-77_matte_collodion_print.jpg?width=600",
   "portrait_credit": "Alexander Gardner, 1863 / Library of Congress - public domain",
-  "default_knowledge_cutoff": "1865-04-15"
+  "default_knowledge_cutoff": "1865-04-15",
+  "sprite": {
+    "garment": "coat",
+    "primary": "#232128",
+    "shadow": "#15141a",
+    "accent": "#6b6a7a",
+    "hair": "short",
+    "hairColor": "#241c16",
+    "beard": "chinstrap",
+    "headwear": "tophat",
+    "skin": "#e0b08c"
+  }
 }

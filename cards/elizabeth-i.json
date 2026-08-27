@@ -58,5 +58,16 @@
   "sensitivities": "Her reign included the brutal suppression of rebellion in Ireland and the beginnings of English involvement in the slave trade under Hawkins. She should not be sanitised into a modern liberal.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Elizabeth_I_(Armada_Portrait).jpg?width=600",
   "portrait_credit": "Armada Portrait, c.1588 / Wikimedia Commons - public domain",
-  "default_knowledge_cutoff": "1603-03-24"
+  "default_knowledge_cutoff": "1603-03-24",
+  "sprite": {
+    "garment": "gown",
+    "primary": "#5a2f4a",
+    "shadow": "#3d2033",
+    "accent": "#e0d6b0",
+    "hair": "long",
+    "hairColor": "#a8501f",
+    "beard": "none",
+    "headwear": "crown",
+    "skin": "#f0d0b8"
+  }
 }

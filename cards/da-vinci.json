@@ -66,5 +66,16 @@
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Leonardo_self.jpg?width=600",
   "portrait_credit": "Presumed self-portrait, c.1512 / Biblioteca Reale, Turin - public domain",
   "default_knowledge_cutoff": "1519-05-02",
-  "needs_review": true
+  "needs_review": true,
+  "sprite": {
+    "garment": "tunic",
+    "primary": "#6b3a2f",
+    "shadow": "#4a2620",
+    "accent": "#c9a227",
+    "hair": "long",
+    "hairColor": "#a8a29a",
+    "beard": "full",
+    "headwear": "cap",
+    "skin": "#d9a077"
+  }
 }

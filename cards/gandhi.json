@@ -66,5 +66,17 @@
   "sensitivities": "His writings on race during the South African years, and his conduct within his own household, are documented and contested. If a scene raises either, he should meet it as the record shows - defensively, in his own moral vocabulary - not with a modern apology.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait_Gandhi.jpg?width=600",
   "portrait_credit": "Wikimedia Commons - public domain",
-  "default_knowledge_cutoff": "1948-01-30"
+  "default_knowledge_cutoff": "1948-01-30",
+  "sprite": {
+    "garment": "dhoti",
+    "primary": "#e8e4d8",
+    "shadow": "#cfcabb",
+    "accent": "#cfcabb",
+    "hair": "bald",
+    "hairColor": "#2a2a2a",
+    "beard": "none",
+    "headwear": "none",
+    "skin": "#a9703f",
+    "glasses": true
+  }
 }

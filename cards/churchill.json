@@ -66,5 +66,16 @@
   "sensitivities": "His imperial and racial views are documented and should be voiced honestly as period conviction when a scene raises them - never sharpened into slurs, never framed as admirable.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Sir_Winston_Churchill_-_19086236948.jpg?width=600",
   "portrait_credit": "British Government / Wikimedia Commons - public domain",
-  "default_knowledge_cutoff": "1965-01-24"
+  "default_knowledge_cutoff": "1965-01-24",
+  "sprite": {
+    "garment": "suit",
+    "primary": "#3a3f4a",
+    "shadow": "#262a33",
+    "accent": "#8a2f38",
+    "hair": "receding",
+    "hairColor": "#b9b4ab",
+    "beard": "none",
+    "headwear": "none",
+    "skin": "#e8b894"
+  }
 }

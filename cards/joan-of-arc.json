@@ -65,5 +65,16 @@
   "sensitivities": "Her trial was a political proceeding dressed as a religious one; the burning should not be treated as spectacle.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Joan_of_Arc_miniature_graded.jpg?width=600",
   "portrait_credit": "Miniature, c.1450-1500 / Archives Nationales, Paris - public domain",
-  "default_knowledge_cutoff": "1431-05-30"
+  "default_knowledge_cutoff": "1431-05-30",
+  "sprite": {
+    "garment": "armor",
+    "primary": "#9aa3b0",
+    "shadow": "#6f7784",
+    "accent": "#8a2f38",
+    "hair": "bob",
+    "hairColor": "#2a1f14",
+    "beard": "none",
+    "headwear": "helm",
+    "skin": "#e8b894"
+  }
 }

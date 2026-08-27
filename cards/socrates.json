@@ -66,5 +66,16 @@
   "sensitivities": "Athenian society rested on slavery and the exclusion of women; he questioned much but not those foundations.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Socrates_Louvre.jpg?width=600",
   "portrait_credit": "Roman copy after Lysippos / Louvre - public domain",
-  "default_knowledge_cutoff": "-0399-01-01"
+  "default_knowledge_cutoff": "-0399-01-01",
+  "sprite": {
+    "garment": "toga",
+    "primary": "#d9d3c0",
+    "shadow": "#bab4a1",
+    "accent": "#8a7a4a",
+    "hair": "bald",
+    "hairColor": "#b0aaa0",
+    "beard": "full",
+    "headwear": "none",
+    "skin": "#c98f68"
+  }
 }

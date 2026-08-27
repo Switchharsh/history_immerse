@@ -8,6 +8,7 @@ import {
 import { searchRoster, rosterSize, FAME_FLOOR } from './roster.js';
 import { identify, enforceSessionQuota, quotaStatus } from './identity.js';
 import { ApiError, createSession, loadSession, runTurn, interject } from './session.js';
+import { getStore } from './store/index.js';
 
 const app = express();
 app.set('trust proxy', true);
@@ -85,6 +86,29 @@ app.post('/api/sessions', wrap(async (req, res) => {
     userId: req.user.id,
   });
   res.status(201).json({ session: publicSession(session) });
+}));
+
+/** The user's past parleys, newest first. */
+app.get('/api/sessions', wrap(async (req, res) => {
+  const limit = Math.min(Number(req.query.limit) || 30, 50);
+  const sessions = await getStore().listSessions(req.user.id, limit);
+  res.json({
+    sessions: sessions.map((s) => ({
+      id: s.id,
+      title: s.scenario.title,
+      type: s.scenario.type,
+      dateLabel: s.scenario.date_label ?? s.scenario.date,
+      cast: s.cast.map((c) => ({ id: c.id, name: c.name, portrait: c.portrait })),
+      turnNumber: s.turnNumber,
+      maxTurns: s.maxTurns,
+      sceneOver: s.sceneOver,
+      endReason: s.endReason,
+      grounded: s.grounded,
+      createdAt: s.createdAt,
+      // First thing anyone actually said — enough to recognise the scene at a glance.
+      preview: s.turns.find((t) => t.kind === 'character')?.text?.slice(0, 160) ?? null,
+    })),
+  });
 }));
 
 app.get('/api/sessions/:id', wrap(async (req, res) => {

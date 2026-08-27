@@ -1,7 +1,8 @@
 # Parley
 
-Real historical figures, played by language models, arguing inside real and hypothetical
-situations — and staying true to who they were.
+A history RPG. Assemble a party of real historical figures, drop them into a situation, and
+watch them argue in character — as pixel sprites, in a dialogue box, the way a console-era
+game would have told it.
 
 Three men divide the postwar world at Tehran. Caesar and Cleopatra negotiate in a palace
 he cannot hold. Churchill, Gandhi and Ashoka are asked what empire was worth, and none of
@@ -97,6 +98,44 @@ byte-identical every turn) and a volatile half (this turn's beat and stage direc
 the stable half is cached. Keep that split intact when editing prompts or the cache stops
 paying for itself.
 
+## Datasets
+
+Everything runs on open data. The app has a **Data** page listing all of this in the UI;
+`web/src/lib/sources.js` is the single source for it. Sources marked *in use* are called by
+code; the rest are documented in `docs/ROSTER.md` but not wired up.
+
+| Source | License | What it does | In use |
+|---|---|---|---|
+| [Wikidata](https://www.wikidata.org) | CC0 1.0 | Birth/death years, labels, portrait filenames, sitelink counts used as the fame score | yes |
+| [Wikipedia (EN)](https://en.wikipedia.org) | CC BY-SA 4.0 | Biographical article text a card is drafted from; category trees for finding candidates | yes |
+| [Wikiquote](https://en.wikiquote.org) | CC BY-SA 4.0 | Sourced quotations — the `sample_lines` that anchor each figure's voice | yes |
+| [Wikimedia Commons](https://commons.wikimedia.org) | per file; all shipped portraits are public domain | Portraits beside dialogue and in roster search | yes |
+| [Pantheon](https://pantheon.world) | see download page | Fame ranking — HPI and language-edition count across ~11k–89k biographies | yes |
+| [Cross-verified notable people, 3500BC–2018AD](https://doi.org/10.1038/s41597-022-01369-4) | CC BY 4.0 | 2.29M individuals; the ceiling for roster scale | no |
+| [Avalon Project, Yale](https://avalon.law.yale.edu) | free scholarly access | Primary documents behind the Tehran ground-truth beats | no |
+
+Two things worth knowing if you extend the roster:
+
+- **The obvious SPARQL query does not work.** Scanning `wikibase:sitelinks` against
+  `wdt:P31 wd:Q5` times out on the public WDQS endpoint at every fame band and with `LIMIT`
+  as low as 50. The Action API is used instead and returns identical counts.
+- **Wikidata moved language-neutral labels to the `mul` code.** Asking for `languages=en`
+  returns an *empty* label for figures like Marie Curie, who then vanish from the roster
+  with no error at all.
+
+## Art
+
+No image assets. Every sprite and backdrop is drawn in code on a 32×56 grid — each figure
+built from a garment silhouette, hair, beard and headwear taken from the documented record,
+because at fourteen pixels a silhouette is the only thing that reads.
+
+```bash
+node web/scripts/preview-sprites.mjs    # renders docs/sprites.png — review the art without a browser
+```
+
+They are stylised representations, not likenesses. Real portraits appear beside the
+dialogue, where the resolution can carry them.
+
 ## Content policy
 
 Two independent gates, and it matters that they are independent:
@@ -136,5 +175,6 @@ Set budget alerts before the first real session, not after.
   you, and it is the gate that decides whether any of the rest matters.
 - 17 sample lines are still `verified: false`. They need a Wikiquote pass before this goes
   anywhere public.
-- The UI has been verified by driving its API through the dev proxy, not by eye in a
-  browser.
+- The UI has been verified by driving its API through the dev proxy and by rendering the
+  sprite sheet to PNG. The assembled React screens have not been seen in a browser.
+- There is no text-to-speech. It was a "someday" idea and was never built.

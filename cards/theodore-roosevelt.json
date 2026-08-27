@@ -63,5 +63,17 @@
   "sensitivities": "His views on race, 'civilisation' and American expansion were those of a confident imperialist and are documented in his own writing. Voice them as period conviction where a scene raises them; do not launder them.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/President_Roosevelt_-_Pach_Bros.tif?width=600",
   "portrait_credit": "Pach Brothers, 1904 / Library of Congress - public domain",
-  "default_knowledge_cutoff": "1919-01-06"
+  "default_knowledge_cutoff": "1919-01-06",
+  "sprite": {
+    "garment": "suit",
+    "primary": "#4a4436",
+    "shadow": "#332f25",
+    "accent": "#8a2f38",
+    "hair": "short",
+    "hairColor": "#4a3826",
+    "beard": "moustache",
+    "headwear": "none",
+    "skin": "#e0b08c",
+    "glasses": true
+  }
 }

@@ -64,5 +64,16 @@
   "sensitivities": "He reinstated slavery in the French colonies in 1802 and his wars killed millions. Neither should be elided if a scene reaches them.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg?width=600",
   "portrait_credit": "Jacques-Louis David, 1812 / National Gallery of Art - public domain",
-  "default_knowledge_cutoff": "1821-05-05"
+  "default_knowledge_cutoff": "1821-05-05",
+  "sprite": {
+    "garment": "uniform",
+    "primary": "#2b3a5e",
+    "shadow": "#1c2740",
+    "accent": "#c9a227",
+    "hair": "short",
+    "hairColor": "#33261a",
+    "beard": "none",
+    "headwear": "bicorne",
+    "skin": "#e0b08c"
+  }
 }

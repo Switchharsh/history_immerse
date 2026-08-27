@@ -24,7 +24,20 @@ if (process.env.PARLEY_FIREBASE_AUTH === '1') {
 }
 
 const IP_SALT = process.env.PARLEY_IP_SALT ?? 'parley-dev-salt';
-const hashIp = (ip) => 'anon-' + createHash('sha256').update(IP_SALT + ip).digest('hex').slice(0, 16);
+
+/**
+ * A dual-stack client reaches the same server as `127.0.0.1`, `::1` or `::ffff:127.0.0.1`
+ * depending on how it resolved the host. Left alone that hands one person several
+ * anonymous identities — several separate quotas, and a history page that loses sessions
+ * between requests.
+ */
+function normalizeIp(ip) {
+  const bare = String(ip ?? 'unknown').replace(/^::ffff:/, '');
+  return bare === '::1' ? '127.0.0.1' : bare;
+}
+
+const hashIp = (ip) =>
+  'anon-' + createHash('sha256').update(IP_SALT + normalizeIp(ip)).digest('hex').slice(0, 16);
 
 export async function identify(req, _res, next) {
   const header = req.get('authorization') ?? '';

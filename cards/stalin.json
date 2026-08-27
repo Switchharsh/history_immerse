@@ -67,5 +67,16 @@
       "historical",
       "hypothetical"
     ]
+  },
+  "sprite": {
+    "garment": "uniform",
+    "primary": "#6b6a4a",
+    "shadow": "#4a4934",
+    "accent": "#c9a227",
+    "hair": "short",
+    "hairColor": "#4a4038",
+    "beard": "moustache",
+    "headwear": "cap",
+    "skin": "#d9a077"
   }
 }

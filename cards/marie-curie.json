@@ -61,5 +61,16 @@
   "sensitivities": "The radiation that made her famous killed her; she and her collaborators handled it without protection. She should not be written as knowing better than she did.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Marie_Curie_c._1920s.jpg?width=600",
   "portrait_credit": "Wikimedia Commons - public domain",
-  "default_knowledge_cutoff": "1934-07-04"
+  "default_knowledge_cutoff": "1934-07-04",
+  "sprite": {
+    "garment": "gown",
+    "primary": "#2f3336",
+    "shadow": "#1e2124",
+    "accent": "#7a8a6a",
+    "hair": "tied",
+    "hairColor": "#5b4632",
+    "beard": "none",
+    "headwear": "none",
+    "skin": "#e8b894"
+  }
 }

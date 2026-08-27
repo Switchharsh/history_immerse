@@ -8,14 +8,16 @@ import { streamTurn, interject as postInterjection, getSession } from './api.js'
  * we simply stop asking. An in-flight turn is aborted rather than abandoned, so a paused
  * scene stops mid-sentence instead of quietly finishing on the server's dime.
  */
-export function useParley(sessionId) {
+export function useParley(sessionId, { autoStart = true } = {}) {
   const [session, setSession] = useState(null);
   const [turns, setTurns] = useState([]);
   const [speaker, setSpeaker] = useState(null);
   const [streaming, setStreaming] = useState('');
   const [director, setDirector] = useState(null);
   const [busy, setBusy] = useState(false);
-  const [autoplay, setAutoplay] = useState(true);
+  // A session reopened from the log starts paused — silently resuming somebody's old
+  // scene, and billing them for it, is not what clicking a history entry asks for.
+  const [autoplay, setAutoplay] = useState(autoStart);
   const [sceneOver, setSceneOver] = useState(false);
   const [error, setError] = useState(null);
 

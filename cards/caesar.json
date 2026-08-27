@@ -65,5 +65,16 @@
   "sensitivities": "The Gallic wars involved mass enslavement and killing on a scale he recorded himself without apology. Let him speak of it as he did - as accountancy - and let the scene supply the judgement.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Gaius_Iulius_Caesar_(Vatican_Museum).jpg?width=600",
   "portrait_credit": "Vatican Museums / Wikimedia Commons - public domain",
-  "default_knowledge_cutoff": "-0044-03-15"
+  "default_knowledge_cutoff": "-0044-03-15",
+  "sprite": {
+    "garment": "toga",
+    "primary": "#e0dbcb",
+    "shadow": "#c2bda9",
+    "accent": "#8a2f38",
+    "hair": "receding",
+    "hairColor": "#5b4632",
+    "beard": "none",
+    "headwear": "laurel",
+    "skin": "#d9a077"
+  }
 }

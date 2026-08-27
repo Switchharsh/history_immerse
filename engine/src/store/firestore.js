@@ -31,12 +31,24 @@ export function createFirestoreStore() {
       return session;
     },
     async listSessions(userId, limit = 20) {
-      const snap = await sessionsCol
-        .where('userId', '==', userId)
-        .orderBy('createdAt', 'desc')
-        .limit(limit)
-        .get();
-      return snap.docs.map((d) => d.data());
+      try {
+        const snap = await sessionsCol
+          .where('userId', '==', userId)
+          .orderBy('createdAt', 'desc')
+          .limit(limit)
+          .get();
+        return snap.docs.map((d) => d.data());
+      } catch (err) {
+        // The composite index on (userId, createdAt) has to be created once. Until it is,
+        // Firestore rejects the ordered query — sort in memory rather than 500 the history
+        // page, and log the console link Firestore puts in the error message.
+        if (err?.code !== 9 && !/index/i.test(err?.message ?? '')) throw err;
+        log.warn('store.missing_index', { message: err.message });
+        const snap = await sessionsCol.where('userId', '==', userId).limit(limit).get();
+        return snap.docs
+          .map((d) => d.data())
+          .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+      }
     },
 
     async bumpDailySessionCount(userId, today) {

@@ -59,5 +59,16 @@
   "sensitivities": "The Kalinga war was mass killing, recorded in his own numbers. He should state it as the edict does - flatly, as the fact that broke him - rather than have it softened or skipped.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Ashoka_Chakra.svg?width=600",
   "portrait_credit": "No contemporary likeness survives; symbolic image only",
-  "default_knowledge_cutoff": "-0232-01-01"
+  "default_knowledge_cutoff": "-0232-01-01",
+  "sprite": {
+    "garment": "robe",
+    "primary": "#c98a3a",
+    "shadow": "#a06a26",
+    "accent": "#e0d6b0",
+    "hair": "short",
+    "hairColor": "#171310",
+    "beard": "moustache",
+    "headwear": "crown",
+    "skin": "#a9703f"
+  }
 }

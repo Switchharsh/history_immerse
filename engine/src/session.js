@@ -346,18 +346,16 @@ export async function* runTurn(session, { signal } = {}) {
     followHistory: session.followHistory,
   });
 
+  // Only the recent window goes in verbatim — everything older is covered by the summary.
   const contents = buildTranscriptContents({
-    turns: session.turns,
+    recent: recentTurns(session),
     speakerId: card.id,
     summary: session.summary,
-    openingLine: session.turns.length === 0 ? session.scenario.opening_line : null,
+    openingLine: session.scenario.opening_line,
+    // The volatile half is its own clearly-framed turn, so the stable half stays cacheable
+    // without the stage direction being mistaken for another character's dialogue.
+    directorNote: volatile,
   });
-
-  // The volatile half rides on the last user turn so the stable half stays cacheable.
-  if (volatile) {
-    const last = contents.at(-1);
-    last.parts[0].text = `${last.parts[0].text}\n\n(${volatile})`;
-  }
 
   let text = '';
   let finishReason = null;

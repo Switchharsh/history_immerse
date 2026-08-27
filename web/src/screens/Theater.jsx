@@ -2,45 +2,46 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useParley } from '../lib/useParley.js';
 import { transcriptUrl } from '../lib/api.js';
-import { Badge, Button, ErrorNote, Portrait, Rule, Spinner } from '../components/ui.jsx';
+import {
+  Advance, Badge, Button, ErrorNote, NamePlate, PixelPortrait, Spinner,
+} from '../components/ui.jsx';
+import CharacterSprite from '../components/CharacterSprite.jsx';
+import Backdrop from '../components/Backdrop.jsx';
 
-export default function Theater({ sessionId, onFinish, onRestart }) {
+export default function Theater({ sessionId, onRestart, onExit, autoStart = true }) {
   const {
     session, turns, speaker, streaming, director,
     busy, autoplay, sceneOver, error,
     pause, resume, step, interject,
-  } = useParley(sessionId);
+  } = useParley(sessionId, { autoStart });
 
   const [draft, setDraft] = useState('');
   const [showDirector, setShowDirector] = useState(false);
-  const scrollRef = useRef(null);
+  const logRef = useRef(null);
   const pinnedRef = useRef(true);
 
-  // Follow the conversation, but stop fighting the user the moment they scroll up.
   const onScroll = () => {
-    const el = scrollRef.current;
+    const el = logRef.current;
     if (!el) return;
-    pinnedRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+    pinnedRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 140;
   };
   useLayoutEffect(() => {
-    if (pinnedRef.current) scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
+    if (pinnedRef.current) logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
   }, [turns.length, streaming]);
-
-  useEffect(() => {
-    if (sceneOver) onFinish?.();
-  }, [sceneOver, onFinish]);
 
   if (!session) {
     return (
       <div className="flex h-full items-center justify-center">
-        <Spinner label="raising the curtain" />
+        <Spinner label="loading" />
       </div>
     );
   }
 
   const cast = session.cast ?? [];
   const activeId = speaker?.id ?? null;
-  const progress = Math.min(100, (session.turnNumber / session.maxTurns) * 100);
+  // Four sprites on a narrow phone need to be smaller than two on a desktop.
+  const spriteScale = cast.length >= 4 ? 3 : cast.length === 3 ? 3.5 : 4;
+  const hp = Math.max(0, session.maxTurns - session.turnNumber);
 
   const send = (e) => {
     e.preventDefault();
@@ -50,162 +51,217 @@ export default function Theater({ sessionId, onFinish, onRestart }) {
     interject(text);
   };
 
+  // The line currently being spoken, or the last one that was.
+  const live = speaker && streaming ? { name: speaker.name, id: speaker.id, text: streaming } : null;
+  const lastTurn = turns.at(-1);
+  const shown =
+    live ??
+    (lastTurn && lastTurn.kind === 'character'
+      ? { name: lastTurn.speakerName, id: lastTurn.speakerId, text: lastTurn.text }
+      : null);
+
   return (
-    <div className="flex h-full flex-col bg-night-texture">
-      {/* ---- header: scene + cast ---- */}
-      <header className="shrink-0 border-b border-brass/20 px-5 py-3">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
-          <div className="min-w-0">
-            <h1 className="truncate font-display text-lg font-semibold tracking-wide text-brass-bright">
-              {session.scenario.title}
-            </h1>
-            <p className="font-ui text-[11px] tracking-wide text-parchment/40 uppercase">
-              {session.scenario.date_label ?? session.scenario.date}
-            </p>
+    <div className="flex h-full flex-col bg-dither">
+      {/* ================= HUD ================= */}
+      <header className="shrink-0 bg-void px-3 py-2 shadow-[0_4px_0_var(--color-gold-dark)]">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2">
+          <div className="flex min-w-0 items-center gap-3">
+            <button onClick={onExit} className="btn-px-ghost !px-2 !py-1.5 text-[9px]">
+              ◂
+            </button>
+            <div className="min-w-0">
+              <p className="truncate font-pixel text-[10px] text-gold">{session.scenario.title}</p>
+              <p className="font-label text-[10px] tracking-wider text-mist uppercase">
+                {session.scenario.date_label ?? session.scenario.date}
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
+
+          <div className="flex items-center gap-3">
+            {/* Turns remaining, drawn as an HP bar — the scene's real resource. */}
+            <div className="flex items-center gap-2">
+              <span className="font-label text-[10px] tracking-wider text-mist uppercase">turns</span>
+              <span className="flex gap-[2px]">
+                {Array.from({ length: Math.min(session.maxTurns, 14) }, (_, i) => {
+                  const scale = session.maxTurns / Math.min(session.maxTurns, 14);
+                  const spent = i * scale < session.turnNumber;
+                  return (
+                    <span
+                      key={i}
+                      className={`h-3 w-[6px] shadow-[0_0_0_1px_var(--color-void)] ${
+                        spent ? 'bg-stone' : hp <= session.maxTurns * 0.25 ? 'bg-blood' : 'bg-jade'
+                      }`}
+                    />
+                  );
+                })}
+              </span>
+              <span className="font-pixel text-[9px] text-bone">
+                {String(session.turnNumber).padStart(2, '0')}/{session.maxTurns}
+              </span>
+            </div>
+
             {session.grounded ? (
-              <Badge
-                tone="verdigris"
-                title="Beats are drawn from the documented record of this meeting."
-              >
-                {session.followHistory ? 'historically grounded' : 'record ignored'}
+              <Badge tone={session.followHistory ? 'jade' : 'violet'}>
+                {session.followHistory ? 'canon' : 'off-canon'}
               </Badge>
             ) : (
-              <Badge tone="muted">{session.scenario.type}</Badge>
+              <Badge tone="violet">what-if</Badge>
             )}
-            <span className="font-ui text-xs text-parchment/35">
-              turn {session.turnNumber}/{session.maxTurns}
-            </span>
           </div>
         </div>
-        <div className="mx-auto mt-2 h-px max-w-5xl bg-parchment/10">
-          <motion.div
-            className="h-px bg-brass"
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.4 }}
-          />
-        </div>
+
+        {/* Objectives: the count only. The beats themselves are withheld from the client
+            deliberately — seeing them spoils the scene. */}
+        {session.grounded && session.followHistory ? (
+          <div className="mx-auto mt-1.5 max-w-5xl">
+            <span className="font-label text-[10px] tracking-wider text-gold uppercase">
+              objectives ▸ {session.remainingBeats > 0
+                ? `${session.remainingBeats} unreached`
+                : 'all reached'}
+            </span>
+          </div>
+        ) : null}
       </header>
 
-      {/* ---- the stage ---- */}
-      <div className="shrink-0 px-5 py-5">
-        <div className="mx-auto flex max-w-5xl items-end justify-center gap-6 sm:gap-12">
-          {cast.map((c) => {
-            const isActive = activeId === c.id;
-            return (
-              <motion.div
-                key={c.id}
-                animate={{ y: isActive ? -8 : 0, scale: isActive ? 1.06 : 1 }}
-                transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-                className="flex flex-col items-center gap-2"
-              >
-                <Portrait
-                  src={c.portrait}
-                  name={c.name}
-                  size="lg"
-                  ring={isActive}
-                  dim={Boolean(activeId) && !isActive}
-                />
-                <p
-                  className={`text-center font-display text-xs tracking-wide transition-colors ${
-                    isActive ? 'text-brass-bright' : 'text-parchment/45'
-                  }`}
-                >
-                  {c.name}
-                </p>
-              </motion.div>
-            );
-          })}
+      {/* ================= STAGE ================= */}
+      <div className="shrink-0 px-3 pt-3">
+        <div className="relative mx-auto max-w-4xl overflow-hidden frame-sm" style={{ aspectRatio: '16 / 7' }}>
+          <Backdrop scenario={session.scenario} />
+
+          {/* Sprites stand on the backdrop's floor line, which sits at 44/72 of its height. */}
+          <div
+            className="absolute inset-x-0 flex items-end justify-center gap-6 sm:gap-12"
+            style={{ bottom: '8%' }}
+          >
+            {cast.map((c) => {
+              const isActive = activeId === c.id;
+              return (
+                <div key={c.id} className="flex flex-col items-center">
+                  <CharacterSprite
+                    card={c}
+                    scale={spriteScale}
+                    speaking={isActive}
+                    dim={Boolean(activeId) && !isActive}
+                  />
+                  <p
+                    className={`mt-1 max-w-24 text-center font-label text-[9px] leading-tight tracking-wider uppercase ${
+                      isActive ? 'text-gold' : 'text-mist'
+                    }`}
+                  >
+                    {c.name}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      <Rule />
-
-      {/* ---- dialogue ---- */}
-      <div ref={scrollRef} onScroll={onScroll} className="min-h-0 flex-1 overflow-y-auto px-5 py-6">
-        <div className="mx-auto max-w-3xl space-y-5">
+      {/* ================= LOG ================= */}
+      <div ref={logRef} onScroll={onScroll} className="min-h-0 flex-1 overflow-y-auto px-4 pb-3">
+        <div className="mx-auto max-w-3xl space-y-2.5">
           {session.scenario.opening_line ? (
-            <p className="border-l-2 border-brass/40 pl-4 font-body text-base leading-relaxed text-parchment/45 italic">
+            <p className="bg-void/60 p-3 font-dialogue text-[15px] leading-relaxed text-mist italic">
               {session.scenario.opening_line}
             </p>
           ) : null}
 
           {turns.map((t) =>
             t.kind === 'user' ? (
-              <motion.div
-                key={t.id}
-                initial={{ opacity: 0, x: 12 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="ml-auto max-w-[80%] rounded-sm border border-brass/30 bg-brass/10 px-4 py-2.5"
-              >
-                <p className="font-ui text-[10px] tracking-[0.12em] text-brass/70 uppercase">
-                  You, from outside the scene
-                </p>
-                <p className="mt-1 font-body text-base text-parchment/90">{t.text}</p>
-              </motion.div>
+              <div key={t.id} className="flex justify-end">
+                <div className="max-w-[85%] bg-gold-dark p-2.5 shadow-[0_0_0_2px_var(--color-void)]">
+                  <p className="font-label text-[10px] tracking-wider text-gold uppercase">You</p>
+                  <p className="mt-1 font-dialogue text-[15px] text-bone">{t.text}</p>
+                </div>
+              </div>
             ) : (
-              <Line key={t.id} turn={t} cast={cast} />
+              <div key={t.id} className="flex gap-2.5">
+                <PixelPortrait
+                  src={cast.find((c) => c.id === t.speakerId)?.portrait}
+                  name={t.speakerName}
+                  size="xs"
+                />
+                <div className="min-w-0 flex-1 bg-void/50 p-2.5">
+                  <p className="font-label text-[10px] tracking-wider text-gold uppercase">
+                    {t.speakerName}
+                  </p>
+                  <p className="mt-0.5 font-dialogue text-[15px] leading-relaxed text-parchment">
+                    {t.text}
+                  </p>
+                </div>
+              </div>
             ),
           )}
-
-          {speaker && streaming ? (
-            <Line
-              turn={{ speakerId: speaker.id, speakerName: speaker.name, text: streaming }}
-              cast={cast}
-              live
-            />
-          ) : null}
-
-          {busy && !streaming ? (
-            <div className="py-2">
-              <Spinner label={speaker ? `${speaker.name} is deciding` : 'the director is choosing'} />
-            </div>
-          ) : null}
 
           <ErrorNote>{error}</ErrorNote>
 
           {sceneOver ? (
-            <div className="py-6 text-center">
-              <Rule className="mb-5" />
-              <p className="font-display text-sm tracking-[0.2em] text-brass/70 uppercase">
-                the scene has ended
-              </p>
-              <p className="mt-2 font-body text-parchment/45 italic">
+            <div className="bg-void p-5 text-center shadow-[0_0_0_2px_var(--color-void),0_0_0_4px_var(--color-gold)]">
+              <p className="font-pixel text-[13px] text-gold">SCENE COMPLETE</p>
+              <p className="mt-3 font-dialogue text-base text-parchment">
                 {session.endReason === 'turn_limit'
                   ? 'They ran out of time before they ran out of argument.'
                   : 'The argument resolved itself.'}
               </p>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
                 <Button variant="ghost" onClick={() => window.open(transcriptUrl(sessionId), '_blank')}>
-                  Read the transcript
+                  Transcript
                 </Button>
-                <Button onClick={onRestart}>Stage another</Button>
+                <Button onClick={onRestart}>New party ▸</Button>
               </div>
             </div>
           ) : null}
         </div>
       </div>
 
-      {/* ---- controls ---- */}
-      <footer className="shrink-0 border-t border-brass/20 bg-night/90 px-5 py-3 backdrop-blur">
+      {/* ================= DIALOGUE BOX ================= */}
+      <div className="shrink-0 px-3 pb-3">
         <div className="mx-auto max-w-3xl">
+          {shown ? (
+            <div className="relative">
+              <div className="absolute -top-3 left-3 z-10">
+                <NamePlate>{shown.name}</NamePlate>
+              </div>
+              <div className="frame bg-night px-4 pt-6 pb-4">
+                <p className="min-h-20 font-dialogue text-lg leading-relaxed text-bone">
+                  {shown.text}
+                  {live ? <span className="blink text-gold">▌</span> : null}
+                </p>
+                {!live && !busy && !sceneOver ? (
+                  <div className="mt-1 text-right">
+                    <Advance />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          ) : (
+            <div className="frame flex min-h-24 items-center justify-center bg-night px-4 py-6">
+              {busy ? (
+                <Spinner label={speaker ? `${speaker.name} is thinking` : 'the director decides'} />
+              ) : (
+                <p className="font-dialogue text-base text-mist">The room is silent.</p>
+              )}
+            </div>
+          )}
+
           {director && showDirector ? (
-            <p className="mb-2 font-ui text-[11px] text-parchment/35">
-              <span className="text-brass/60">director:</span> {director.reason}
+            <p className="mt-2 bg-void/70 p-2 font-label text-[10px] tracking-wider text-mist">
+              <span className="text-gold">DIR:</span> {director.reason}
               {director.stage_direction ? ` — “${director.stage_direction}”` : ''}
             </p>
           ) : null}
 
-          <form onSubmit={send} className="flex items-center gap-2">
+          {/* ---- command bar ---- */}
+          <form onSubmit={send} className="mt-2.5 flex flex-wrap items-center gap-2">
             <input
               value={draft}
               onChange={(e) => setDraft(e.target.value.slice(0, 400))}
               disabled={sceneOver}
               placeholder={sceneOver ? 'The scene has ended.' : 'Interject…'}
-              className="min-w-0 flex-1 rounded-sm border border-brass/25 bg-night-soft px-3 py-2
-                         font-body text-base text-parchment placeholder:text-parchment/25
-                         focus:border-brass/60 focus:outline-none disabled:opacity-40"
+              className="min-w-40 flex-1 bg-void px-3 py-2.5 font-dialogue text-base text-bone
+                         shadow-[0_0_0_2px_var(--color-void),0_0_0_4px_var(--color-stone)]
+                         focus:shadow-[0_0_0_2px_var(--color-void),0_0_0_4px_var(--color-gold)]
+                         focus:outline-none disabled:opacity-40"
             />
             <Button type="submit" variant="ghost" disabled={!draft.trim() || sceneOver}>
               Speak
@@ -213,7 +269,7 @@ export default function Theater({ sessionId, onFinish, onRestart }) {
             {!sceneOver ? (
               autoplay ? (
                 <Button variant="ghost" onClick={pause} type="button">
-                  Pause
+                  ‖
                 </Button>
               ) : (
                 <>
@@ -221,47 +277,21 @@ export default function Theater({ sessionId, onFinish, onRestart }) {
                     Step
                   </Button>
                   <Button onClick={resume} type="button" disabled={busy}>
-                    Resume
+                    ▶
                   </Button>
                 </>
               )
             ) : null}
+            <button
+              type="button"
+              onClick={() => setShowDirector((v) => !v)}
+              className="font-label text-[10px] tracking-wider text-mist uppercase hover:text-gold"
+            >
+              {showDirector ? '[hide dir]' : '[dir]'}
+            </button>
           </form>
-
-          <button
-            onClick={() => setShowDirector((v) => !v)}
-            className="mt-1.5 font-ui text-[10px] tracking-wide text-parchment/25 uppercase hover:text-parchment/50"
-          >
-            {showDirector ? 'hide' : 'show'} director
-          </button>
         </div>
-      </footer>
-    </div>
-  );
-}
-
-function Line({ turn, cast, live = false }) {
-  const card = cast.find((c) => c.id === turn.speakerId);
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="flex gap-4"
-    >
-      <Portrait src={card?.portrait} name={turn.speakerName} size="sm" ring={live} />
-      <div className="min-w-0 flex-1">
-        <p className="font-display text-sm font-semibold tracking-wide text-brass-bright">
-          {turn.speakerName}
-        </p>
-        <p
-          className={`mt-1 font-body text-[1.0625rem] leading-relaxed text-parchment/90 ${
-            live ? 'caret' : ''
-          }`}
-        >
-          {turn.text}
-        </p>
       </div>
-    </motion.div>
+    </div>
   );
 }

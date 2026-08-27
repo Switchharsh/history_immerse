@@ -30,6 +30,7 @@ export const createSession = (body) =>
   json('/api/sessions', { method: 'POST', body: JSON.stringify(body) }).then((r) => r.session);
 
 export const getSession = (id) => json(`/api/sessions/${id}`).then((r) => r.session);
+export const listSessions = () => json('/api/sessions').then((r) => r.sessions);
 
 export const interject = (id, text) =>
   json(`/api/sessions/${id}/interject`, { method: 'POST', body: JSON.stringify({ text }) }).then((r) => r.turn);

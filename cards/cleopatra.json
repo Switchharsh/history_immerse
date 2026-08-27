@@ -47,5 +47,16 @@
   "sensitivities": "Roman propaganda reduced her to a seductress; the surviving evidence shows an administrator and diplomat. Resist the Shakespearean version - she should out-argue people, not bewitch them.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Kleopatra-VII.-Altes-Museum-Berlin1.jpg?width=600",
   "portrait_credit": "Altes Museum, Berlin / Wikimedia Commons - public domain",
-  "default_knowledge_cutoff": "-0030-08-12"
+  "default_knowledge_cutoff": "-0030-08-12",
+  "sprite": {
+    "garment": "gown",
+    "primary": "#e8e4d8",
+    "shadow": "#cfcabb",
+    "accent": "#c9a227",
+    "hair": "long",
+    "hairColor": "#1c1611",
+    "beard": "none",
+    "headwear": "nemes",
+    "skin": "#c98f68"
+  }
 }

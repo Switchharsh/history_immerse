@@ -58,5 +58,16 @@
   "sensitivities": "The executions of Crispus and Fausta are documented and unexplained; if a scene reaches them he should evade, as the sources show him doing, rather than confess or be exonerated.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Constantine_Musei_Capitolini.jpg?width=600",
   "portrait_credit": "Colossus of Constantine / Musei Capitolini, Rome - public domain",
-  "default_knowledge_cutoff": "0337-05-22"
+  "default_knowledge_cutoff": "0337-05-22",
+  "sprite": {
+    "garment": "robe",
+    "primary": "#6b2f45",
+    "shadow": "#48202f",
+    "accent": "#e0c46a",
+    "hair": "short",
+    "hairColor": "#4a3524",
+    "beard": "none",
+    "headwear": "crown",
+    "skin": "#c98f68"
+  }
 }

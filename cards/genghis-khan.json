@@ -58,5 +58,16 @@
       "historical",
       "hypothetical"
     ]
+  },
+  "sprite": {
+    "garment": "tunic",
+    "primary": "#5b4a2f",
+    "shadow": "#3d3120",
+    "accent": "#8a6a2f",
+    "hair": "tied",
+    "hairColor": "#1c1611",
+    "beard": "goatee",
+    "headwear": "hood",
+    "skin": "#d9a077"
   }
 }

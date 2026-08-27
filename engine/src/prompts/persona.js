@@ -130,27 +130,55 @@ function volatileBlock({ beat, direction }) {
   return parts.length ? parts.join('\n') : null;
 }
 
-/** Transcript rendered for a specific speaker: their own lines as `model`, everyone else's as `user`. */
-export function buildTranscriptContents({ turns, speakerId, summary, openingLine }) {
+/** Append, merging into the previous message when the role repeats. */
+function push(contents, role, text) {
+  const last = contents.at(-1);
+  if (last?.role === role) last.parts[0].text += `\n\n${text}`;
+  else contents.push({ role, parts: [{ text }] });
+}
+
+/**
+ * The transcript as this particular speaker experiences it: their own past lines come back
+ * as `model` turns, everyone else's as `user` turns.
+ *
+ * `recent` must already be windowed by the caller. The rolling summary covers everything
+ * older — passing the full transcript alongside the summary means the model reads the same
+ * events twice and context grows without bound, which defeats the summarizer entirely.
+ */
+export function buildTranscriptContents({ recent, speakerId, summary, openingLine, directorNote }) {
   const contents = [];
-  const preamble = [];
 
-  if (openingLine) preamble.push(openingLine);
-  if (summary) preamble.push(`What has been said so far: ${summary}`);
-  if (preamble.length) contents.push({ role: 'user', parts: [{ text: preamble.join('\n\n') }] });
+  const framing = [];
+  // The opening narration stays for the whole scene, not just the first turn — it is the
+  // only description of the room the speaker ever gets.
+  if (openingLine) framing.push(openingLine);
+  if (summary) framing.push(`Where the conversation has got to: ${summary}`);
+  if (framing.length) push(contents, 'user', framing.join('\n\n'));
 
-  for (const t of turns) {
-    if (t.speakerId === speakerId) {
-      contents.push({ role: 'model', parts: [{ text: t.text }] });
+  for (const t of recent) {
+    if (t.kind === 'character' && t.speakerId === speakerId) {
+      push(contents, 'model', t.text);
     } else {
       const who = t.kind === 'user' ? 'A voice from outside the scene' : t.speakerName;
-      contents.push({ role: 'user', parts: [{ text: `${who}: ${t.text}` }] });
+      push(contents, 'user', `${who}: ${t.text}`);
     }
+  }
+
+  // The director's note must be unmistakably an aside to the actor. Appending it to the
+  // previous line — which is another character's dialogue — makes it read as something
+  // that character just said aloud, and the speaker answers the instruction instead of
+  // acting on it.
+  if (directorNote) {
+    push(
+      contents,
+      'user',
+      `[Not spoken in the room. A note to you alone, from outside the scene.]\n${directorNote}`,
+    );
   }
 
   // The model must end on a `user` turn or it has nothing to answer.
   if (contents.length === 0 || contents.at(-1).role === 'model') {
-    contents.push({ role: 'user', parts: [{ text: 'The room is waiting on you. Speak.' }] });
+    push(contents, 'user', 'The room is waiting on you. Speak.');
   }
   return contents;
 }

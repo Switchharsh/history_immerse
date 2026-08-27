@@ -8,3 +8,4 @@ generated-cards/
 data/raw/
 .DS_Store
 web/dist/
+data/portrait-cache/

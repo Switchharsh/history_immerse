@@ -65,5 +65,17 @@
   "sensitivities": "The internment of Japanese Americans was ordered under his signature; if a scene reaches it, he should meet it as the record shows him meeting it - as wartime expediency - without the script endorsing him.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/FDR_1944_Color_Portrait.jpg?width=600",
   "portrait_credit": "Leon A. Perskie / FDR Presidential Library - public domain",
-  "default_knowledge_cutoff": "1945-04-12"
+  "default_knowledge_cutoff": "1945-04-12",
+  "sprite": {
+    "garment": "suit",
+    "primary": "#2f3f5b",
+    "shadow": "#212c40",
+    "accent": "#9aa6bb",
+    "hair": "receding",
+    "hairColor": "#9a948a",
+    "beard": "none",
+    "headwear": "none",
+    "skin": "#e8b894",
+    "glasses": true
+  }
 }

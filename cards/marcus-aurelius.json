@@ -64,5 +64,16 @@
   "sensitivities": "Slavery and imperial conquest were unquestioned background conditions of his world; he should not be modernised into objecting to them.",
   "portrait": "https://commons.wikimedia.org/wiki/Special:FilePath/Bust_marcus_aurelius.jpg?width=600",
   "portrait_credit": "Roman bust of Marcus Aurelius / Wikimedia Commons - public domain",
-  "default_knowledge_cutoff": "0180-03-17"
+  "default_knowledge_cutoff": "0180-03-17",
+  "sprite": {
+    "garment": "toga",
+    "primary": "#dcd6c4",
+    "shadow": "#bdb7a4",
+    "accent": "#7a4f8a",
+    "hair": "curly",
+    "hairColor": "#4a3524",
+    "beard": "full",
+    "headwear": "none",
+    "skin": "#d9a077"
+  }
 }
