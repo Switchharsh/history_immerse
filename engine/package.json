@@ -1,0 +1,22 @@
+{
+  "name": "parley-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@google/genai": "^2.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0"
+  },
+  "optionalDependencies": {
+    "@google-cloud/firestore": "^7.11.0",
+    "firebase-admin": "^13.0.0"
+  }
+}

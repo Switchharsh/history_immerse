@@ -1,0 +1,85 @@
+import 'dotenv/config';
+
+const bool = (v, dflt = false) =>
+  v === undefined ? dflt : ['1', 'true', 'yes', 'on'].includes(String(v).toLowerCase());
+const int = (v, dflt) => (v === undefined || v === '' ? dflt : Number.parseInt(v, 10));
+
+/**
+ * Provider selection:
+ *   mock     - no network, no key, deterministic-ish text. Default, so the stack runs bare.
+ *   aistudio - Gemini Developer API with an API key. The free prompt-lab path.
+ *   vertex   - Vertex AI with ADC. The production path; GCP credits apply here.
+ */
+const provider = (process.env.PARLEY_PROVIDER ?? 'mock').toLowerCase();
+
+export const config = {
+  port: int(process.env.PORT, 8080),
+  provider,
+
+  aistudio: {
+    apiKey: process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY ?? '',
+  },
+  vertex: {
+    project: process.env.GOOGLE_CLOUD_PROJECT ?? '',
+    location: process.env.GOOGLE_CLOUD_LOCATION ?? 'us-central1',
+  },
+
+  models: {
+    // Characters get the better model; everything the user never sees runs on the cheap one.
+    character: process.env.PARLEY_MODEL_CHARACTER ?? 'gemini-2.5-flash',
+    utility: process.env.PARLEY_MODEL_UTILITY ?? 'gemini-2.5-flash-lite',
+  },
+
+  // Cost guards. Every one of these is a hard stop, not a hint.
+  limits: {
+    maxTurns: int(process.env.PARLEY_MAX_TURNS, 28),
+    maxOutputTokens: int(process.env.PARLEY_MAX_OUTPUT_TOKENS, 350),
+    recentWindow: int(process.env.PARLEY_RECENT_WINDOW, 12),
+    summarizeAfter: int(process.env.PARLEY_SUMMARIZE_AFTER, 12),
+    maxCast: int(process.env.PARLEY_MAX_CAST, 4),
+    minCast: int(process.env.PARLEY_MIN_CAST, 2),
+    customScenarioChars: int(process.env.PARLEY_CUSTOM_SCENARIO_CHARS, 600),
+    interjectionChars: int(process.env.PARLEY_INTERJECTION_CHARS, 400),
+  },
+
+  // Kill switch: flip this and every model call refuses before it costs anything.
+  disabled: bool(process.env.PARLEY_DISABLED, false),
+
+  // Vertex context caching. Cheap win on a multi-agent chat where the persona block is
+  // byte-identical every turn. Silently unavailable on providers that don't support it.
+  contextCache: {
+    enabled: bool(process.env.PARLEY_CONTEXT_CACHE, provider === 'vertex'),
+    ttlSeconds: int(process.env.PARLEY_CONTEXT_CACHE_TTL, 900),
+  },
+
+  store: (process.env.PARLEY_STORE ?? 'memory').toLowerCase(), // memory | firestore
+
+  quotas: {
+    enabled: bool(process.env.PARLEY_QUOTAS, false),
+    anonymousSessionsPerDay: int(process.env.PARLEY_QUOTA_ANON, 3),
+    signedInSessionsPerDay: int(process.env.PARLEY_QUOTA_SIGNED_IN, 10),
+  },
+
+  moderation: {
+    enabled: bool(process.env.PARLEY_MODERATION, true),
+  },
+
+  corsOrigins: (process.env.PARLEY_CORS_ORIGINS ?? '*')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean),
+
+  logLevel: process.env.PARLEY_LOG_LEVEL ?? 'info',
+};
+
+export function describeConfig() {
+  return {
+    provider: config.provider,
+    models: config.models,
+    store: config.store,
+    contextCache: config.contextCache.enabled,
+    quotas: config.quotas.enabled,
+    moderation: config.moderation.enabled,
+    disabled: config.disabled,
+  };
+}
