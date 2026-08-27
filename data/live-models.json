@@ -1,52 +1,149 @@
 {
   "project": "sci-swarm-615859",
-  "location": "us-central1",
+  "region": "us-central1",
   "rows": [
     {
       "model": "gemini-2.5-flash-lite",
+      "endpoints": [
+        "global",
+        "us-central1"
+      ],
+      "pricedAs": "global",
       "inputPerMillion": 0.1,
       "outputPerMillion": 0.4,
-      "ambiguous": false,
-      "priceVariants": [
-        "Gemini 2.5 Flash Lite Text Input - Predictions = $0.1/M",
-        "Gemini 2.5 Flash Lite Text Output - Predictions = $0.4/M",
-        "Gemini 2.5 Flash Lite Thinking Text Output - Predictions = $0.4/M"
-      ],
+      "flexInputPerMillion": null,
+      "flexOutputPerMillion": null,
       "scenePerRun": 0.00842,
+      "sceneFlex": null,
       "scenesPer20Usd": 2375
     },
     {
+      "model": "gemini-3.1-flash-lite",
+      "endpoints": [
+        "global"
+      ],
+      "pricedAs": "global",
+      "inputPerMillion": 0.25,
+      "outputPerMillion": 1.5,
+      "flexInputPerMillion": 0.125,
+      "flexOutputPerMillion": 0.75,
+      "scenePerRun": 0.0237,
+      "sceneFlex": 0.01185,
+      "scenesPer20Usd": 843
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "endpoints": [
+        "global"
+      ],
+      "pricedAs": "global",
+      "inputPerMillion": 0.3,
+      "outputPerMillion": 2.5,
+      "flexInputPerMillion": 0.15,
+      "flexOutputPerMillion": 1.25,
+      "scenePerRun": 0.03215,
+      "sceneFlex": 0.016075,
+      "scenesPer20Usd": 622
+    },
+    {
       "model": "gemini-2.5-flash",
+      "endpoints": [
+        "global",
+        "us-central1"
+      ],
+      "pricedAs": "global",
       "inputPerMillion": 0.3,
       "outputPerMillion": 3.5,
-      "ambiguous": true,
-      "priceVariants": [
-        "Gemini 2.5 Flash GA Text Input - Predictions = $0.3/M",
-        "Gemini 2.5 Flash Text Input - Predictions = $0.15/M",
-        "Gemini 2.5 Flash Text Output (Thinking On) - Predictions = $3.5/M",
-        "Gemini 2.5 Flash Text Output (Thinking On and Long) - Predictions = $3.5/M",
-        "Gemini 2.5 Flash Thinking Text Output - Predictions = $3.5/M",
-        "Gemini 2.5 Flash GA Text Output (Thinking On) - Predictions = $2.5/M",
-        "Gemini 2.5 Flash GA Text Output - Predictions = $2.5/M",
-        "Gemini 2.5 Flash GA Thinking Text Output - Predictions = $2.5/M",
-        "Gemini 2.5 Flash GA Text Output (Thinking On and Long) - Predictions = $2.5/M",
-        "Gemini 2.5 Flash Text Output - Predictions = $0.6/M"
-      ],
+      "flexInputPerMillion": null,
+      "flexOutputPerMillion": null,
       "scenePerRun": 0.03745,
+      "sceneFlex": null,
       "scenesPer20Usd": 534
     },
     {
+      "model": "gemini-3-flash-preview",
+      "endpoints": [
+        "global"
+      ],
+      "pricedAs": "global",
+      "inputPerMillion": 0.5,
+      "outputPerMillion": 3,
+      "flexInputPerMillion": 0.25,
+      "flexOutputPerMillion": 1.5,
+      "scenePerRun": 0.0474,
+      "sceneFlex": 0.0237,
+      "scenesPer20Usd": 421
+    },
+    {
       "model": "gemini-2.5-pro",
+      "endpoints": [
+        "global",
+        "us-central1"
+      ],
+      "pricedAs": "global",
       "inputPerMillion": 1.25,
       "outputPerMillion": 10,
-      "ambiguous": false,
-      "priceVariants": [
-        "Gemini 2.5 Pro Text Input - Predictions = $1.25/M",
-        "Gemini 2.5 Pro Text Output - Predictions = $10/M",
-        "Gemini 2.5 Pro Thinking Text Output - Predictions = $10/M"
-      ],
+      "flexInputPerMillion": null,
+      "flexOutputPerMillion": null,
       "scenePerRun": 0.13175,
+      "sceneFlex": null,
       "scenesPer20Usd": 151
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "endpoints": [
+        "global"
+      ],
+      "pricedAs": "global",
+      "inputPerMillion": 1.5,
+      "outputPerMillion": 7.5,
+      "flexInputPerMillion": 0.75,
+      "flexOutputPerMillion": 3.75,
+      "scenePerRun": 0.13425,
+      "sceneFlex": 0.067125,
+      "scenesPer20Usd": 148
+    },
+    {
+      "model": "gemini-3.7-flash",
+      "endpoints": [
+        "global"
+      ],
+      "pricedAs": "global",
+      "inputPerMillion": 1.5,
+      "outputPerMillion": 7.5,
+      "flexInputPerMillion": 0.75,
+      "flexOutputPerMillion": 3.75,
+      "scenePerRun": 0.13425,
+      "sceneFlex": 0.067125,
+      "scenesPer20Usd": 148
+    },
+    {
+      "model": "gemini-3.5-flash",
+      "endpoints": [
+        "global"
+      ],
+      "pricedAs": "global",
+      "inputPerMillion": 1.5,
+      "outputPerMillion": 9,
+      "flexInputPerMillion": 0.75,
+      "flexOutputPerMillion": 4.5,
+      "scenePerRun": 0.1422,
+      "sceneFlex": 0.0711,
+      "scenesPer20Usd": 140
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "endpoints": [
+        "global"
+      ],
+      "pricedAs": "global",
+      "inputPerMillion": null,
+      "outputPerMillion": null,
+      "flexInputPerMillion": null,
+      "flexOutputPerMillion": null,
+      "scenePerRun": null,
+      "sceneFlex": null,
+      "scenesPer20Usd": null
     }
   ]
 }

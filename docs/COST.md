@@ -114,35 +114,52 @@ Real list prices, per 1M tokens, from your own billing catalog:
 ## Which models are actually live
 
 ```bash
-node tools/list-models.mjs            # enumerate -> probe -> price, cheapest first
-node tools/list-models.mjs --location europe-west4
+node tools/list-models.mjs            # enumerate -> probe both endpoints -> price
 ```
 
-Model Garden publishes **29** predict-capable Gemini entries, but only **3** text models
-actually resolve in `sci-swarm-615859` / `us-central1`:
+**10 Gemini text models resolve for this project.** Standard-tier list prices; a scene is
+28 turns at roughly 63k input / 5.3k output, measured from a real run.
 
-| model | in $/1M | out $/1M | per 28-turn scene | scenes per $20 |
-|---|---|---|---|---|
-| **`gemini-2.5-flash-lite`** | **0.10** | **0.40** | **$0.0084** | **~2,375** |
-| `gemini-2.5-flash` | 0.30 | 2.50 | $0.037 | ~534 |
-| `gemini-2.5-pro` | 1.25 | 10.00 | $0.132 | ~151 |
+| model | endpoint | in $/1M | out $/1M | per scene | flex | scenes/$20 |
+|---|---|---|---|---|---|---|
+| **`gemini-2.5-flash-lite`** | both | **0.10** | **0.40** | **$0.0084** | — | **2,375** |
+| `gemini-3.1-flash-lite` | global | 0.25 | 1.50 | $0.0237 | $0.0119 | 843 |
+| `gemini-3.5-flash-lite` | global | 0.30 | 2.50 | $0.0322 | $0.0161 | 622 |
+| `gemini-2.5-flash` | both | 0.30 | 3.50 | $0.0375 | — | 534 |
+| `gemini-3-flash-preview` | global | 0.50 | 3.00 | $0.0474 | $0.0237 | 421 |
+| `gemini-2.5-pro` | both | 1.25 | 10.00 | $0.1318 | — | 151 |
+| `gemini-3.6-flash` | global | 1.50 | 7.50 | $0.1343 | $0.0671 | 148 |
+| `gemini-3.7-flash` | global | 1.50 | 7.50 | $0.1343 | $0.0671 | 148 |
+| `gemini-3.5-flash` | global | 1.50 | 9.00 | $0.1422 | $0.0711 | 140 |
+| `gemini-3.1-pro-preview` | global | ? | ? | no public SKU | | |
 
-Everything Google lists as `gemini-3.x`, `gemini-3.5-*`, `gemini-3.6-*`, `gemini-3.7-*`
-and all `gemini-2.0-*` returns **404** in this region. Presence in Model Garden does not
-mean a model is served where you are calling from — probe with `countTokens`, which is
-free, rather than by generating.
+### The global endpoint
 
-### A pricing trap worth knowing
+Every `gemini-3.x` model is served **only on the global endpoint**
+(`aiplatform.googleapis.com/.../locations/global`), not on any regional one. Probing
+`us-central1`, `us-east5` and `europe-west4` returns 404 for all of them; the same model
+on global returns 200.
 
-One model can match several SKU families at different prices. `gemini-2.5-flash` matches
-both a "Gemini 2.5 Flash" family at $0.15/$0.60 and a "Gemini 2.5 Flash **GA**" family at
-$0.30/$2.50, and nothing in the catalog says which one bills your call. There are also
-`Live` (a different API) and `(Long)` (>200k context) variants.
+An earlier version of this tool probed only the configured region and reported that no
+Gemini 3 model existed. That was wrong. Both endpoints are probed now.
 
-Both tools now **take the highest applicable rate** and record the alternatives in
-`engine/prices.json` under `cheaperAlternatives`. Understating cost is the one direction a
-spend ceiling must never err in. A first run picked the cheaper family and would have had
-the meter reporting roughly half of true spend on `gemini-2.5-flash`.
+### Newer is not cheaper
+
+Gemini 3 Flash-Lite costs **2.5x the input and 3.75x the output** of 2.5 Flash-Lite, and
+3.5 Flash-Lite is 3x/6.25x. `gemini-2.5-flash-lite` remains the cheapest by a wide margin
+and stays the default.
+
+### Pricing dimensions that are easy to miss
+
+- **Global vs Regional** are priced differently — Regional runs ~10% above Global for the
+  3.x family. A model must be priced against the endpoint it is actually served on.
+- **Flex** and **Off-Peak** tiers are roughly **half price** for weaker latency and
+  availability guarantees. Worth considering for a hobby project where a slow turn costs
+  nothing; not yet wired into the engine.
+- **Several SKU families can match one model.** `gemini-2.5-flash` matches both a "Flash"
+  family at $0.15/$0.60 and a "Flash GA" family at $0.30/$2.50, and nothing says which
+  bills a given call. Both tools take the **highest** applicable rate — understating cost
+  is the one direction a spend ceiling must never err in.
 
 ## What $20 actually buys
 
