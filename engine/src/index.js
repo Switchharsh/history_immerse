@@ -9,6 +9,7 @@ import { searchRoster, rosterSize, FAME_FLOOR } from './roster.js';
 import { identify, enforceSessionQuota, quotaStatus } from './identity.js';
 import { ApiError, createSession, loadSession, runTurn, interject } from './session.js';
 import { getStore } from './store/index.js';
+import { synthesise, listVoices, ttsAvailable } from './tts.js';
 
 const app = express();
 app.set('trust proxy', true);
@@ -34,8 +35,38 @@ app.get('/api/health', (_req, res) => {
     cards: allCards().length,
     scenarios: allScenarios().length,
     rosterEntries: rosterSize(),
+    tts: ttsAvailable(),
   });
 });
+
+// ---------------------------------------------------------------------------
+// Speech
+// ---------------------------------------------------------------------------
+
+/** Synthesise one line. Returns audio/mpeg, cached server-side by (text, voice). */
+app.post('/api/sessions/:id/speak', wrap(async (req, res) => {
+  const session = await loadSession(req.params.id);
+  const { turnId, text, characterId } = req.body ?? {};
+
+  const turn = turnId ? session.turns.find((t) => t.id === turnId) : null;
+  const line = turn?.text ?? text;
+  const who = turn?.speakerId ?? characterId;
+  if (!line) throw new ApiError(400, 'no_text', 'Give a turnId or some text.');
+
+  const audio = await synthesise({ text: line, characterId: who, sessionId: session.id });
+  res.set({
+    'Content-Type': 'audio/mpeg',
+    'Content-Length': String(audio.length),
+    // Same line, same voice, same bytes — let the browser keep it.
+    'Cache-Control': 'private, max-age=3600',
+  });
+  res.send(audio);
+}));
+
+/** The voices this deployment can actually reach. Names move; do not trust a hard-coded list. */
+app.get('/api/tts/voices', wrap(async (req, res) => {
+  res.json({ voices: await listVoices(req.query.lang ?? 'en') });
+}));
 
 app.get('/api/characters', (_req, res) => {
   res.json({ characters: allCards().map(cardSummary).sort((a, b) => a.name.localeCompare(b.name)) });

@@ -69,5 +69,10 @@
     "beard": "goatee",
     "headwear": "hood",
     "skin": "#d9a077"
+  },
+  "voice": {
+    "name": "en-US-Neural2-D",
+    "speakingRate": 0.84,
+    "pitch": -5.0
   }
 }

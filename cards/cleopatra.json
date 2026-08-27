@@ -58,5 +58,10 @@
     "beard": "none",
     "headwear": "nemes",
     "skin": "#c98f68"
+  },
+  "voice": {
+    "name": "en-GB-Neural2-C",
+    "speakingRate": 0.98,
+    "pitch": 0.0
   }
 }

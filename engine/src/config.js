@@ -64,6 +64,16 @@ export const config = {
     enabled: bool(process.env.PARLEY_MODERATION, true),
   },
 
+  // Google Cloud Text-to-Speech. Off by default: billed per character, and a full scene
+  // is a lot of characters. Every guard below is a hard stop.
+  tts: {
+    enabled: bool(process.env.PARLEY_TTS, false),
+    defaultVoice: process.env.PARLEY_TTS_VOICE ?? 'en-GB-Neural2-B',
+    defaultRate: Number.parseFloat(process.env.PARLEY_TTS_RATE ?? '0.96'),
+    maxChars: int(process.env.PARLEY_TTS_MAX_CHARS, 900),
+    sessionCharBudget: int(process.env.PARLEY_TTS_SESSION_BUDGET, 12000),
+  },
+
   corsOrigins: (process.env.PARLEY_CORS_ORIGINS ?? '*')
     .split(',')
     .map((s) => s.trim())

@@ -126,7 +126,11 @@
       "type": "string"
     },
     "portrait": {
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Portrait URL, or null when no likeness survives. Null is a valid answer, not a gap to fill."
     },
     "portrait_credit": {
       "type": "string"
@@ -242,6 +246,29 @@
         },
         "glasses": {
           "type": "boolean"
+        }
+      }
+    },
+    "voice": {
+      "type": "object",
+      "description": "Google Cloud TTS reading voice. Chosen for variety and a plausible accent \u2014 not an attempt to reproduce how the person actually sounded. Verify names against GET /api/tts/voices; voice names change.",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "languageCode": {
+          "type": "string"
+        },
+        "speakingRate": {
+          "type": "number",
+          "minimum": 0.25,
+          "maximum": 4
+        },
+        "pitch": {
+          "type": "number",
+          "minimum": -20,
+          "maximum": 20
         }
       }
     }

@@ -69,5 +69,10 @@
     "beard": "none",
     "headwear": "crown",
     "skin": "#c98f68"
+  },
+  "voice": {
+    "name": "en-GB-Neural2-D",
+    "speakingRate": 0.92,
+    "pitch": -2.0
   }
 }

@@ -1,0 +1,30 @@
+{
+  "id": "zama-conference-202bce",
+  "title": "The Meeting Before Zama",
+  "type": "historical",
+  "date": "-0202-10-18",
+  "date_label": "October, 202 BCE",
+  "setting": "Open ground between two camps on the plain near Zama, in Africa. Both armies are drawn up and can see them. Each general has brought one interpreter and nothing else. Polybius says they stood for a moment in silence before either spoke.",
+  "participants_hint": ["hannibal", "scipio-africanus"],
+  "min_cast": 2,
+  "max_cast": 2,
+  "stakes": "Whether the sixteen-year war ends here in terms, or tomorrow in a battle that will destroy one of them.",
+  "issue_tags": ["war", "rome", "carthage", "peace", "clemency"],
+  "roles_in_scene": {
+    "hannibal": "Recalled from Italy after sixteen years, undefeated in the field and out of options, asking for terms",
+    "scipio-africanus": "Holding every advantage, with a Numidian cavalry force that has just arrived, and no reason to concede anything"
+  },
+  "ground_truth": [
+    "Hannibal opens by invoking the reversals of fortune and the wisdom of settling while both can still choose",
+    "He offers Carthage's surrender of Spain, Sicily and the islands - the situation before the war",
+    "Scipio answers that Carthage broke the previous armistice and that these terms cost her nothing she still holds",
+    "Scipio demands the original terms plus reparation for the truce Carthage violated",
+    "The conference breaks up without agreement",
+    "Battle is joined the next day and Hannibal is defeated"
+  ],
+  "opening_line": "Two armies watch from either side of an empty plain. The two men who have spent their lives studying each other meet for the first time.",
+  "sources": [
+    "Polybius, Histories XV.6-8",
+    "Livy, Ab Urbe Condita XXX.30-31"
+  ]
+}

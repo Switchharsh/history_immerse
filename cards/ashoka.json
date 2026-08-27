@@ -70,5 +70,10 @@
     "beard": "moustache",
     "headwear": "crown",
     "skin": "#a9703f"
+  },
+  "voice": {
+    "name": "en-IN-Neural2-C",
+    "speakingRate": 0.88,
+    "pitch": -2.0
   }
 }

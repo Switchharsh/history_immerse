@@ -1,0 +1,22 @@
+{
+  "id": "what-rome-cost",
+  "title": "What Rome Cost",
+  "type": "hypothetical",
+  "date": "0061-01-01",
+  "date_label": "outside of time",
+  "setting": "A colonnade with no city attached to it. Roman columns, and beyond them nothing at all. The people gathered here were made by Rome, ruined by Rome, or spent their lives trying to get out from under it, and none of them agrees about which.",
+  "participants_hint": ["augustus", "boudica", "spartacus", "hannibal"],
+  "min_cast": 2,
+  "max_cast": 4,
+  "stakes": "Whether an empire that built roads and law on top of slavery and massacre can be entered on any ledger at all.",
+  "issue_tags": ["rome", "empire", "revolt", "slavery", "war", "romanisation"],
+  "roles_in_scene": {
+    "augustus": "The man who built the thing, entirely unrepentant, and better at this argument than anyone expects",
+    "boudica": "Whose kingdom Rome annexed, whose daughters Roman officers raped, and who burned three cities for it",
+    "spartacus": "Who never wanted to argue about Rome, only to walk out of it",
+    "hannibal": "Who spent sixteen years trying to take it apart and would like to know what everyone thinks he got wrong"
+  },
+  "ground_truth": [],
+  "out_of_time": true,
+  "opening_line": "Columns, and no city behind them. Four people with entirely incompatible claims on the same empire."
+}

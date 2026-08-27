@@ -123,6 +123,55 @@ Two things worth knowing if you extend the roster:
   returns an *empty* label for figures like Marie Curie, who then vanish from the roster
   with no error at all.
 
+## Rome
+
+The largest curated block, and the roster tooling goes deep on it:
+
+```bash
+node tools/roster-rome.mjs            # writes data/roster-rome.json
+node tools/roster-rome.mjs --merge    # fold into the searchable roster
+```
+
+That indexes **2,447 Roman figures** above a fame floor of 6 — 177 emperors, 1,687
+consuls, 384 praetors, 8 kings and 1,628 military commanders, deduplicated across roles.
+
+It uses SPARQL, which the general roster builder deliberately does not. The difference is
+selectivity: `?p wdt:P39 wd:Q842606` ("held the position of Roman emperor") is a few
+hundred entities before any join, where scanning `wikibase:sitelinks` across every human is
+unbounded. Selective predicate first, filter second — that shape returns in seconds.
+
+Curated Roman cards: Caesar, Augustus, Cicero, Cato the Younger, Sulla, Pompey, Mark
+Antony, Scipio Africanus, Hannibal, Livia, Marcus Aurelius, Constantine, Cleopatra, plus
+Boudica, Spartacus and Tarquin the Proud from the edges of the Roman world.
+
+Two of the Roman scenarios are **documented meetings**, not inventions: the conference
+between Scipio and Hannibal before Zama (Polybius XV.6-8) and the Senate debate of 7
+January 49 BCE.
+
+## Speech
+
+Google Cloud Text-to-Speech, off by default because it bills per character.
+
+```bash
+PARLEY_TTS=1 npm run engine     # needs the API enabled + ADC credentials
+curl localhost:8080/api/tts/voices | head    # what this project can actually reach
+```
+
+Each card carries a `voice`. These are **reading voices chosen for variety and a plausible
+accent — not attempts to reproduce how anyone actually sounded**, and the UI says so. Guards:
+a per-request character cap, a per-session budget, and a server-side cache so replaying a
+line never bills twice.
+
+## Reading speed
+
+Text reveal is decoupled from network speed. Streaming tokens straight to the screen lets
+the model's throughput decide how fast a human has to read, which is no basis for anything
+— a fast model dumps a five-sentence speech in under a second. Tokens buffer as they
+arrive and a separate timer types them out at a fixed rate.
+
+Four speeds plus **wait-for-me** mode, which holds between lines until you press space or
+click, the way a game does. Both persist in `localStorage`.
+
 ## Art
 
 No image assets. Every sprite and backdrop is drawn in code on a 32×56 grid — each figure

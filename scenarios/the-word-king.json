@@ -1,0 +1,23 @@
+{
+  "id": "the-word-king",
+  "title": "The Word 'King'",
+  "type": "hypothetical",
+  "date": "-0044-03-15",
+  "date_label": "outside of time",
+  "setting": "A curia with seven seats and no clerk. Five centuries of Roman politics turned on a single word nobody would say out loud, and the men who took the trouble to avoid it are here to explain themselves to the one who did not.",
+  "participants_hint": ["tarquin-the-proud", "caesar", "augustus", "sulla", "cato-the-younger"],
+  "min_cast": 2,
+  "max_cast": 4,
+  "stakes": "Whether refusing the title while taking the power was statesmanship or the most successful lie in Roman history.",
+  "issue_tags": ["kingship", "republic", "constitution", "dictatorship", "senate", "the_expulsion"],
+  "roles_in_scene": {
+    "tarquin-the-proud": "The last king, expelled, and unconvinced that anything really changed after him",
+    "caesar": "Refused a crown in public three times and was murdered anyway",
+    "augustus": "Took everything and called himself first citizen, and died in bed at seventy-five",
+    "sulla": "Took absolute power by the legal route, used it for mass killing, then gave it back",
+    "cato-the-younger": "Killed himself rather than concede that any of the above was legitimate"
+  },
+  "ground_truth": [],
+  "out_of_time": true,
+  "opening_line": "Seven seats, five men, and one word that ended a monarchy and killed a dictator."
+}

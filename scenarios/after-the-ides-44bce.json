@@ -1,0 +1,30 @@
+{
+  "id": "after-the-ides-44bce",
+  "title": "After the Ides",
+  "type": "historical",
+  "date": "-0044-03-17",
+  "date_label": "17 March, 44 BCE",
+  "setting": "The Temple of Tellus, two days after the murder. The assassins are barricaded on the Capitol. Antony holds Caesar's papers, Caesar's money and the consulship. The Senate has to decide, this morning, whether Caesar was a tyrant — because if he was, his acts are void, and every man in the room holds his office by one of them.",
+  "participants_hint": ["mark-antony", "cicero"],
+  "min_cast": 2,
+  "max_cast": 3,
+  "stakes": "Whether the assassins are honoured or hunted, and whether Caesar's acts stand.",
+  "issue_tags": ["caesar_question", "republic", "tyranny", "law", "east"],
+  "roles_in_scene": {
+    "mark-antony": "Consul, holder of Caesar's papers, and the only man who can keep the veterans off the Capitol",
+    "cicero": "Not a conspirator, delighted by the deed, and arguing for an amnesty he will spend the rest of his life regretting"
+  },
+  "ground_truth": [
+    "Cicero proposes an amnesty for the assassins, on the Athenian precedent",
+    "Antony argues that voiding Caesar's acts voids the offices and provinces the senators are sitting on",
+    "The compromise is reached: amnesty for the assassins, and all of Caesar's acts confirmed",
+    "Antony secures a public funeral and the reading of Caesar's will",
+    "The funeral turns the city against the assassins and the compromise collapses"
+  ],
+  "opening_line": "Caesar's body is still in his house. The Senate must decide before nightfall whether he was a tyrant or a magistrate.",
+  "sources": [
+    "Cicero, Philippics I-II",
+    "Appian, Civil Wars II.126-148",
+    "Plutarch, Life of Brutus 19"
+  ]
+}

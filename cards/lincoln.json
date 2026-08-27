@@ -74,5 +74,10 @@
     "beard": "chinstrap",
     "headwear": "tophat",
     "skin": "#e0b08c"
+  },
+  "voice": {
+    "name": "en-US-Neural2-A",
+    "speakingRate": 0.88,
+    "pitch": -2.0
   }
 }

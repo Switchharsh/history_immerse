@@ -76,5 +76,10 @@
     "beard": "none",
     "headwear": "laurel",
     "skin": "#d9a077"
+  },
+  "voice": {
+    "name": "en-GB-Neural2-D",
+    "speakingRate": 1.02,
+    "pitch": 0.0
   }
 }

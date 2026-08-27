@@ -1,0 +1,33 @@
+{
+  "id": "senate-january-49bce",
+  "title": "The Senate Debates Caesar",
+  "type": "historical",
+  "date": "-0049-01-07",
+  "date_label": "7 January, 49 BCE",
+  "setting": "The Senate house in Rome. Caesar's letter has been read: he will lay down his command if Pompey lays down his. The tribunes Antony and Cassius have vetoed every motion against him. Outside the walls, Pompey has legions and Caesar is at Ravenna with one.",
+  "participants_hint": ["cicero", "cato-the-younger", "pompey", "mark-antony"],
+  "min_cast": 2,
+  "max_cast": 4,
+  "stakes": "Whether the Senate votes the final decree and makes civil war certain, or finds a formula that lets both men climb down.",
+  "issue_tags": ["caesar_question", "republic", "war", "law", "tyranny"],
+  "roles_in_scene": {
+    "cicero": "Newly returned from Cilicia, desperate for a compromise, and trusted by nobody on either side",
+    "cato-the-younger": "Refusing every accommodation, as he has for ten years, and about to be proved right in the worst way",
+    "pompey": "Insisting he wants no war while declining to disarm first",
+    "mark-antony": "Tribune of the plebs, vetoing on Caesar's behalf, and days from fleeing the city"
+  },
+  "ground_truth": [
+    "Caesar's offer of mutual disarmament is put to the house and treated as a manoeuvre rather than an offer",
+    "Cato refuses any settlement that leaves Caesar a command or a consulship in absentia",
+    "Cicero proposes compromise formulas and finds no support from either side",
+    "Pompey lets it be known he will not disarm first, while denying he wants war",
+    "The senatus consultum ultimum is passed and the tribunes' veto is overridden",
+    "Antony and Cassius flee Rome for Caesar's camp"
+  ],
+  "opening_line": "A letter has been read aloud. Every man in the chamber understands that the next few hours decide whether there is a war.",
+  "sources": [
+    "Caesar, Bellum Civile I.1-5",
+    "Cicero, Letters to Atticus VII",
+    "Plutarch, Lives of Caesar, Pompey, Cato the Younger"
+  ]
+}

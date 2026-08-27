@@ -1,22 +1,61 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useParley } from '../lib/useParley.js';
+import { useParley, TEXT_SPEEDS } from '../lib/useParley.js';
 import { transcriptUrl } from '../lib/api.js';
+import { useSpeech } from '../lib/useSpeech.js';
 import {
   Advance, Badge, Button, ErrorNote, NamePlate, PixelPortrait, Spinner,
 } from '../components/ui.jsx';
 import CharacterSprite from '../components/CharacterSprite.jsx';
 import Backdrop from '../components/Backdrop.jsx';
 
+const readSetting = (key, dflt) => {
+  try {
+    return localStorage.getItem(key) ?? dflt;
+  } catch {
+    return dflt;
+  }
+};
+
 export default function Theater({ sessionId, onRestart, onExit, autoStart = true }) {
+  const [speed, setSpeed] = useState(() => readSetting('parley.speed', 'normal'));
+  const [manualAdvance, setManualAdvance] = useState(
+    () => readSetting('parley.manualAdvance', 'true') === 'true',
+  );
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('parley.speed', speed);
+      localStorage.setItem('parley.manualAdvance', String(manualAdvance));
+    } catch {
+      /* private mode; the setting just won't persist */
+    }
+  }, [speed, manualAdvance]);
+
   const {
     session, turns, speaker, streaming, director,
+    typing, lineComplete,
     busy, autoplay, sceneOver, error,
-    pause, resume, step, interject,
-  } = useParley(sessionId, { autoStart });
+    pause, resume, step, interject, advance,
+  } = useParley(sessionId, {
+    autoStart,
+    cps: TEXT_SPEEDS[speed] ?? TEXT_SPEEDS.normal,
+    manualAdvance,
+  });
 
   const [draft, setDraft] = useState('');
   const [showDirector, setShowDirector] = useState(false);
+  const [voiceOn, setVoiceOn] = useState(false);
+  const [ttsAvailable, setTtsAvailable] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/health')
+      .then((r) => r.json())
+      .then((h) => setTtsAvailable(Boolean(h.tts)))
+      .catch(() => setTtsAvailable(false));
+  }, []);
+
+  const { speak, stop, speaking, error: speechError } = useSpeech({ sessionId, enabled: voiceOn });
   const logRef = useRef(null);
   const pinnedRef = useRef(true);
 
@@ -28,6 +67,30 @@ export default function Theater({ sessionId, onRestart, onExit, autoStart = true
   useLayoutEffect(() => {
     if (pinnedRef.current) logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
   }, [turns.length, streaming]);
+
+  // Space or Enter presses on, the way it would in a game — but not while the reader is
+  // typing an interjection.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== ' ' && e.key !== 'Enter') return;
+      const tag = document.activeElement?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      e.preventDefault();
+      advance();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [advance]);
+
+  // Speak each new line once, as it lands.
+  const spokenRef = useRef(new Set());
+  useEffect(() => {
+    if (!voiceOn) return;
+    const last = turns.at(-1);
+    if (!last || last.kind !== 'character' || spokenRef.current.has(last.id)) return;
+    spokenRef.current.add(last.id);
+    speak({ turnId: last.id });
+  }, [turns, voiceOn, speak]);
 
   if (!session) {
     return (
@@ -194,6 +257,7 @@ export default function Theater({ sessionId, onRestart, onExit, autoStart = true
           )}
 
           <ErrorNote>{error}</ErrorNote>
+          <ErrorNote>{speechError}</ErrorNote>
 
           {sceneOver ? (
             <div className="bg-void p-5 text-center shadow-[0_0_0_2px_var(--color-void),0_0_0_4px_var(--color-gold)]">
@@ -222,13 +286,23 @@ export default function Theater({ sessionId, onRestart, onExit, autoStart = true
               <div className="absolute -top-3 left-3 z-10">
                 <NamePlate>{shown.name}</NamePlate>
               </div>
-              <div className="frame bg-night px-4 pt-6 pb-4">
+              <div
+                onClick={advance}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Tab' || advance()}
+                className="frame cursor-pointer bg-night px-4 pt-6 pb-4"
+                title={typing ? 'Click to finish the line' : 'Click to continue'}
+              >
                 <p className="min-h-20 font-dialogue text-lg leading-relaxed text-bone">
                   {shown.text}
-                  {live ? <span className="blink text-gold">▌</span> : null}
+                  {live && typing ? <span className="blink text-gold">▌</span> : null}
                 </p>
-                {!live && !busy && !sceneOver ? (
-                  <div className="mt-1 text-right">
+                {live && !typing && !sceneOver ? (
+                  <div className="mt-1 flex items-center justify-end gap-2">
+                    <span className="font-label text-[10px] tracking-wider text-mist uppercase">
+                      {manualAdvance ? 'space / click' : ''}
+                    </span>
                     <Advance />
                   </div>
                 ) : null}
@@ -290,6 +364,51 @@ export default function Theater({ sessionId, onRestart, onExit, autoStart = true
               {showDirector ? '[hide dir]' : '[dir]'}
             </button>
           </form>
+
+          {/* ---- reading settings ---- */}
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span className="font-label text-[10px] tracking-wider text-mist uppercase">speed</span>
+            {Object.keys(TEXT_SPEEDS).map((k) => (
+              <button
+                key={k}
+                type="button"
+                onClick={() => setSpeed(k)}
+                className={`px-2 py-1 font-label text-[10px] tracking-wider uppercase shadow-[0_0_0_2px_var(--color-void)] ${
+                  speed === k ? 'bg-gold text-void' : 'bg-slate text-mist hover:bg-stone hover:text-bone'
+                }`}
+              >
+                {k}
+              </button>
+            ))}
+            {ttsAvailable ? (
+              <button
+                type="button"
+                onClick={() => {
+                  const next = !voiceOn;
+                  setVoiceOn(next);
+                  if (!next) stop();
+                  // This click is also the gesture browsers require before audio may play.
+                  else if (shown) speak({ turnId: lastTurn?.id, text: shown.text, characterId: shown.id });
+                }}
+                title="Read the dialogue aloud with Google Cloud Text-to-Speech."
+                className={`px-2 py-1 font-label text-[10px] tracking-wider uppercase shadow-[0_0_0_2px_var(--color-void)] ${
+                  voiceOn ? 'bg-jade text-void' : 'bg-slate text-mist hover:bg-stone hover:text-bone'
+                }`}
+              >
+                {speaking ? '♪ speaking' : voiceOn ? '♪ voice on' : '♪ voice'}
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={() => setManualAdvance((v) => !v)}
+              title="Wait for you between lines instead of running on."
+              className={`ml-2 px-2 py-1 font-label text-[10px] tracking-wider uppercase shadow-[0_0_0_2px_var(--color-void)] ${
+                manualAdvance ? 'bg-gold text-void' : 'bg-slate text-mist hover:bg-stone hover:text-bone'
+              }`}
+            >
+              {manualAdvance ? 'wait for me' : 'auto-run'}
+            </button>
+          </div>
         </div>
       </div>
     </div>

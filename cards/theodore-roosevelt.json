@@ -75,5 +75,10 @@
     "headwear": "none",
     "skin": "#e0b08c",
     "glasses": true
+  },
+  "voice": {
+    "name": "en-US-Neural2-J",
+    "speakingRate": 1.1,
+    "pitch": 1.0
   }
 }
