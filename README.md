@@ -185,6 +185,26 @@ node web/scripts/preview-sprites.mjs    # renders docs/sprites.png — review th
 They are stylised representations, not likenesses. Real portraits appear beside the
 dialogue, where the resolution can carry them.
 
+## Cost
+
+Hard ceiling of **$20**, enforced in the app itself:
+
+```bash
+curl localhost:8080/api/spend
+```
+
+Every call is priced from the provider's own usage metadata the moment it returns; once the
+ceiling is crossed the next call raises `402` and stops. This matters because a GCP budget
+is an *alert* reacting to billing data that lags real usage by hours — a runaway loop can
+spend a lot inside that window.
+
+Measured with the shipped price table: a 30-turn scene costs about **$0.22**, or **$0.14**
+with context caching — so roughly 90–140 scenes inside $20. Speech roughly doubles it,
+which is why `PARLEY_TTS` defaults to off.
+
+Run a GCP budget too, in a **project of its own**. Full detail, including the limits of the
+in-app estimate, in [docs/COST.md](docs/COST.md).
+
 ## Content policy
 
 Two independent gates, and it matters that they are independent:

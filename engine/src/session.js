@@ -4,6 +4,7 @@ import { getProvider } from './providers/index.js';
 import { getStore } from './store/index.js';
 import { getCard, getScenario, cardSummary } from './content.js';
 import { log } from './log.js';
+import { assertBudget, priceCall, record } from './spend.js';
 import { buildPersonaPrompt, buildTranscriptContents } from './prompts/persona.js';
 import { buildDirectorPrompt, DIRECTOR_SCHEMA, fallbackDecision } from './prompts/director.js';
 import { buildSummarizerPrompt } from './prompts/summarizer.js';
@@ -63,6 +64,7 @@ function enforceCastPolicy(cards, scenarioType) {
 export async function moderateCustomScenario({ text, cards }) {
   if (!config.moderation.enabled) return { allowed: true, reason: 'moderation disabled', category: 'ok' };
 
+  assertBudget('moderation');
   const { system, user } = buildModerationPrompt({ text, cast: cards });
   const { text: raw } = await getProvider().generateText({
     model: config.models.utility,
@@ -87,6 +89,7 @@ export async function moderateCustomScenario({ text, cards }) {
 }
 
 async function buildCustomScenario({ text, cards }) {
+  assertBudget('custom_scenario');
   const { system, user } = buildCustomScenarioPrompt({ text, cast: cards });
   const { text: raw } = await getProvider().generateText({
     model: config.models.utility,
@@ -200,12 +203,18 @@ function recentTurns(session) {
   return session.turns.slice(-config.limits.recentWindow);
 }
 
-function accrue(session, usage) {
+function accrue(session, usage, kind = 'utility') {
   if (!usage) return;
   session.usage.calls += 1;
   session.usage.inputTokens += usage.promptTokenCount ?? 0;
   session.usage.outputTokens += usage.candidatesTokenCount ?? 0;
   session.usage.cachedTokens += usage.cachedContentTokenCount ?? 0;
+
+  // Priced the moment the provider tells us what it used, so the ceiling can stop the
+  // very next call rather than waiting for billing data hours later.
+  const usd = priceCall({ kind, usage });
+  session.usage.estimatedUsd = Math.round(((session.usage.estimatedUsd ?? 0) + usd) * 1e6) / 1e6;
+  record(usd, { kind, sessionId: session.id });
 }
 
 async function decideNextTurn(session) {
@@ -224,6 +233,7 @@ async function decideNextTurn(session) {
 
   let decision = null;
   try {
+    assertBudget('director');
     const { text, usage } = await getProvider().generateText({
       model: config.models.utility,
       systemInstruction: system,
@@ -279,6 +289,7 @@ async function maybeSummarize(session) {
   });
 
   try {
+    assertBudget('summarizer');
     const { text, usage } = await getProvider().generateText({
       model: config.models.utility,
       systemInstruction: system,
@@ -360,6 +371,7 @@ export async function* runTurn(session, { signal } = {}) {
   let text = '';
   let finishReason = null;
   try {
+    assertBudget('character');
     for await (const chunk of getProvider().streamText({
       model: config.models.character,
       systemInstruction: stable,
@@ -380,12 +392,17 @@ export async function* runTurn(session, { signal } = {}) {
         text += chunk.text;
         yield { event: 'token', data: { t: chunk.text } };
       } else if (chunk.type === 'end') {
-        accrue(session, chunk.usage);
+        accrue(session, chunk.usage, 'character');
         finishReason = chunk.finishReason;
       }
     }
   } catch (err) {
     if (signal?.aborted) return;
+    if (err instanceof ApiError) {
+      // Budget and policy refusals are the user's business, not a generic failure.
+      yield { event: 'error', data: { code: err.code, message: err.message } };
+      return;
+    }
     log.error('character.failed', { sessionId: session.id, speaker: card.id, error: err?.message ?? String(err) });
     yield { event: 'error', data: { code: 'generation_failed', message: 'That turn could not be generated.' } };
     return;

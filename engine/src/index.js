@@ -10,6 +10,7 @@ import { identify, enforceSessionQuota, quotaStatus } from './identity.js';
 import { ApiError, createSession, loadSession, runTurn, interject } from './session.js';
 import { getStore } from './store/index.js';
 import { synthesise, listVoices, ttsAvailable } from './tts.js';
+import { spendReport } from './spend.js';
 
 const app = express();
 app.set('trust proxy', true);
@@ -36,8 +37,12 @@ app.get('/api/health', (_req, res) => {
     scenarios: allScenarios().length,
     rosterEntries: rosterSize(),
     tts: ttsAvailable(),
+    spend: spendReport(),
   });
 });
+
+/** The spend meter. Estimated, not authoritative — see docs/COST.md. */
+app.get('/api/spend', (_req, res) => res.json(spendReport()));
 
 // ---------------------------------------------------------------------------
 // Speech

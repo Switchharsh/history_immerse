@@ -3,6 +3,7 @@ import { config } from './config.js';
 import { log } from './log.js';
 import { getCard } from './content.js';
 import { ApiError } from './session.js';
+import { assertBudget, recordTts } from './spend.js';
 
 /**
  * Google Cloud Text-to-Speech.
@@ -82,6 +83,8 @@ export async function synthesise({ text, characterId, sessionId }) {
     spend.set(sessionId, used + clean.length);
   }
 
+  assertBudget('tts');
+
   const [response] = await client.synthesizeSpeech({
     input: { text: clean },
     voice: { languageCode: voice.languageCode, name: voice.name },
@@ -97,6 +100,7 @@ export async function synthesise({ text, characterId, sessionId }) {
   if (cache.size >= CACHE_MAX) cache.delete(cache.keys().next().value);
   cache.set(key, { audio, at: Date.now() });
 
+  recordTts(clean.length);
   log.info('tts.synthesised', { characterId, voice: voice.name, chars: clean.length });
   return audio;
 }
