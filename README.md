@@ -198,9 +198,10 @@ ceiling is crossed the next call raises `402` and stops. This matters because a 
 is an *alert* reacting to billing data that lags real usage by hours — a runaway loop can
 spend a lot inside that window.
 
-Measured with the shipped price table: a 30-turn scene costs about **$0.22**, or **$0.14**
-with context caching — so roughly 90–140 scenes inside $20. Speech roughly doubles it,
-which is why `PARLEY_TTS` defaults to off.
+Prices are fetched from the Cloud Billing Catalog by `node tools/fetch-prices.mjs`, not
+guessed. Measured live on `gemini-2.5-flash-lite`: a 28-turn scene costs about
+**$0.0085**, so roughly **2,300 scenes inside $20**. Speech costs ~17x the dialogue it
+reads, which is why `PARLEY_TTS` defaults to off.
 
 Run a GCP budget too, in a **project of its own**. Full detail, including the limits of the
 in-app estimate, in [docs/COST.md](docs/COST.md).

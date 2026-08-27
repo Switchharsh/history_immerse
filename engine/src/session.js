@@ -203,7 +203,48 @@ function recentTurns(session) {
   return session.turns.slice(-config.limits.recentWindow);
 }
 
-function accrue(session, usage, kind = 'utility') {
+/**
+ * Resolve whatever the director returned in `inject_beat` back to a real remaining beat.
+ *
+ * Two failures this prevents, both seen in a live run:
+ *
+ * 1. The prompt presents beats as a numbered list, and the model returns the number with
+ *    it — "1. He offers Carthage's surrender...". An exact-string match then fails, the
+ *    beat is never consumed, and it is injected again on the following turn. The scene
+ *    repeats itself.
+ * 2. The model can return a beat that is not on the list at all. Injecting that would put
+ *    invented events into a scenario whose whole promise is that it follows the record.
+ *
+ * Returns the canonical beat text, or null to inject nothing.
+ */
+function resolveBeat(returned, remaining) {
+  if (!returned || !remaining.length) return null;
+
+  const norm = (s) =>
+    String(s)
+      .replace(/^\s*(?:\d+\s*[.)\]]|[-*\u2022])\s*/, '') // leading "1." / "-" / bullet
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+
+  const target = norm(returned);
+  if (!target) return null;
+
+  const exact = remaining.find((b) => norm(b) === target);
+  if (exact) return exact;
+
+  // Tolerate truncation or a trailing clause in either direction.
+  const partial = remaining.find((b) => {
+    const n = norm(b);
+    return n.startsWith(target) || target.startsWith(n);
+  });
+  if (partial) return partial;
+
+  log.warn('director.unknown_beat', { returned: String(returned).slice(0, 120) });
+  return null;
+}
+
+function accrue(session, usage, kind = 'utility', model = null) {
   if (!usage) return;
   session.usage.calls += 1;
   session.usage.inputTokens += usage.promptTokenCount ?? 0;
@@ -212,7 +253,7 @@ function accrue(session, usage, kind = 'utility') {
 
   // Priced the moment the provider tells us what it used, so the ceiling can stop the
   // very next call rather than waiting for billing data hours later.
-  const usd = priceCall({ kind, usage });
+  const usd = priceCall({ kind, usage, model });
   session.usage.estimatedUsd = Math.round(((session.usage.estimatedUsd ?? 0) + usd) * 1e6) / 1e6;
   record(usd, { kind, sessionId: session.id });
 }
@@ -252,7 +293,7 @@ async function decideNextTurn(session) {
         maxTurns: session.maxTurns,
       },
     });
-    accrue(session, usage);
+    accrue(session, usage, 'utility', config.models.utility);
     decision = parseJsonLoosely(text);
   } catch (err) {
     log.warn('director.failed', { sessionId: session.id, error: err?.message ?? String(err) });
@@ -300,7 +341,7 @@ async function maybeSummarize(session) {
       where: 'summarizer',
       meta: { turnCount: session.turns.length },
     });
-    accrue(session, usage);
+    accrue(session, usage, 'utility', config.models.utility);
     if (text?.trim()) {
       session.summary = text.trim();
       session.summarizedThrough = older.length;
@@ -344,7 +385,8 @@ export async function* runTurn(session, { signal } = {}) {
 
   const card = getCard(decision.next_speaker);
   const cards = session.castIds.map(getCard);
-  const beat = decision.inject_beat || null;
+  // Canonical text, not whatever the director echoed back — see resolveBeat.
+  const beat = resolveBeat(decision.inject_beat, session.remainingBeats);
 
   yield { event: 'speaker', data: { id: card.id, name: card.name, turnNumber: session.turnNumber + 1 } };
 
@@ -392,7 +434,7 @@ export async function* runTurn(session, { signal } = {}) {
         text += chunk.text;
         yield { event: 'token', data: { t: chunk.text } };
       } else if (chunk.type === 'end') {
-        accrue(session, chunk.usage, 'character');
+        accrue(session, chunk.usage, 'character', config.models.character);
         finishReason = chunk.finishReason;
       }
     }

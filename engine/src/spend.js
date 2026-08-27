@@ -1,6 +1,29 @@
+import { readFileSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { config } from './config.js';
 import { log } from './log.js';
 import { ApiError } from './session.js';
+
+/**
+ * Real per-model prices, fetched from the Cloud Billing Catalog by
+ * `node tools/fetch-prices.mjs`. Present means priced from Google's own numbers; absent
+ * means we fall back to the conservative env defaults below.
+ */
+const PRICE_FILE = join(dirname(fileURLToPath(import.meta.url)), '..', 'prices.json');
+let catalog = null;
+if (existsSync(PRICE_FILE)) {
+  try {
+    catalog = JSON.parse(readFileSync(PRICE_FILE, 'utf8'));
+    log.info('spend.catalog_loaded', {
+      models: Object.keys(catalog.models ?? {}),
+      source: catalog.fetchedFrom,
+    });
+  } catch (err) {
+    log.warn('spend.catalog_unreadable', { error: err?.message ?? String(err) });
+  }
+}
+const catalogFor = (model) => catalog?.models?.[model] ?? null;
 
 /**
  * A hard spend ceiling enforced inside the app.
@@ -60,8 +83,13 @@ function rollDay() {
   }
 }
 
-/** USD for one model call, from the provider's own usage metadata. */
-export function priceCall({ kind, usage }) {
+/**
+ * USD for one model call, from the provider's own usage metadata.
+ *
+ * Prefers the real catalog price for the specific model; falls back to the conservative
+ * env defaults when the model is not in prices.json.
+ */
+export function priceCall({ kind, usage, model }) {
   if (!usage) return 0;
   const input = usage.promptTokenCount ?? 0;
   const cached = usage.cachedContentTokenCount ?? 0;
@@ -69,12 +97,16 @@ export function priceCall({ kind, usage }) {
   // Reasoning tokens are billed as output on models that emit them.
   const thoughts = usage.thoughtsTokenCount ?? 0;
 
-  const inRate = kind === 'character' ? PRICES.characterInput : PRICES.utilityInput;
-  const outRate = kind === 'character' ? PRICES.characterOutput : PRICES.utilityOutput;
+  const real = model ? catalogFor(model) : null;
+  const inRate = real ? real.inputPerMillion : kind === 'character' ? PRICES.characterInput : PRICES.utilityInput;
+  const outRate = real ? real.outputPerMillion : kind === 'character' ? PRICES.characterOutput : PRICES.utilityOutput;
+  const thinkRate = real ? real.thinkingOutputPerMillion : outRate;
+  // Cached input is discounted, but never assume the discount applied to a given call.
+  const cachedRate = real ? real.inputPerMillion : PRICES.cachedInput;
 
   const fresh = Math.max(0, input - cached);
   return (
-    (fresh * inRate + cached * PRICES.cachedInput + (output + thoughts) * outRate) / 1_000_000
+    (fresh * inRate + cached * cachedRate + output * outRate + thoughts * thinkRate) / 1_000_000
   );
 }
 
@@ -161,6 +193,11 @@ export function spendReport() {
     calls: state.calls,
     ttsChars: state.ttsChars,
     stoppedAt: state.stoppedAt,
+    models: config.models,
+    priceSource: catalog
+      ? catalog.fetchedFrom
+      : 'conservative env defaults — run `node tools/fetch-prices.mjs` for real prices',
+    catalogPrices: catalog?.models ?? null,
     note:
       'Estimated from token counts using the price table in engine/src/spend.js. ' +
       'This is not a billing figure — GCP billing is authoritative. Keep a GCP budget too.',

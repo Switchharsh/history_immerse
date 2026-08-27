@@ -67,7 +67,7 @@ export function buildDirectorPrompt({
   const beats =
     followHistory && remainingBeats.length
       ? `\nGROUND TRUTH NOT YET REACHED (in rough order):\n${remainingBeats
-          .map((b, i) => `${i + 1}. ${b}`)
+          .map((b) => `- ${b}`)
           .join('\n')}`
       : followHistory
         ? '\nGROUND TRUTH: all beats have been reached.'
@@ -80,7 +80,7 @@ Your standing problem is that these characters will drift toward agreement, poli
 Rules:
 - next_speaker must be one of the roster ids, and must not be the character who just spoke unless nobody else could plausibly answer.
 - If the audience just interjected, strongly prefer the character it was aimed at, or the one it most provokes.
-- inject_beat: only when the conversation has arrived somewhere that beat fits naturally. Never force two beats in a row. Null most turns.
+- inject_beat: only when the conversation has arrived somewhere that beat fits naturally. Never force two beats in a row. Null most turns. Copy the beat text EXACTLY as listed, with no numbering, bullet or added words — it is matched against the list.
 - stage_direction: at most one short sentence, and only when the scene needs a shove. Null when the argument has its own momentum.
 - scene_over: true when the argument has genuinely resolved or exhausted itself, or when the remaining beats are done and the scene has landed. Prefer ending a beat early over padding.`;
 

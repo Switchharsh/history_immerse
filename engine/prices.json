@@ -1,0 +1,27 @@
+{
+  "fetchedFrom": "Cloud Billing Catalog, service C7E2-9256-1C43 (Vertex AI)",
+  "currency": "USD",
+  "note": "Standard tier, text modality, non-batch, non-priority. Re-run tools/fetch-prices.mjs to refresh. Regional and committed-use pricing may differ from the list price here.",
+  "models": {
+    "gemini-2.5-flash-lite": {
+      "inputPerMillion": 0.1,
+      "outputPerMillion": 0.4,
+      "thinkingOutputPerMillion": 0.4,
+      "skus": {
+        "input": "Gemini 2.5 Flash Lite Text Input - Predictions",
+        "output": "Gemini 2.5 Flash Lite Text Output - Predictions",
+        "thinkingOutput": "Gemini 2.5 Flash Lite Thinking Text Output - Predictions"
+      }
+    },
+    "gemini-2.5-flash": {
+      "inputPerMillion": 0.3,
+      "outputPerMillion": 2.5,
+      "thinkingOutputPerMillion": 2.5,
+      "skus": {
+        "input": "Gemini 2.5 Flash GA Text Input - Predictions",
+        "output": " Gemini 2.5 Flash GA Text Output - Predictions",
+        "thinkingOutput": "Gemini 2.5 Flash GA Thinking Text Output - Predictions"
+      }
+    }
+  }
+}
