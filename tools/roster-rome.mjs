@@ -24,6 +24,20 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+/**
+ * POLICY.md §2, applied at build time so excluded figures never reach data/ at all.
+ * Defence in depth: the engine filters again on load, but a file that never contains
+ * them cannot leak them through some future code path that forgets to check.
+ */
+function loadDenylist(root) {
+  try {
+    const d = JSON.parse(readFileSync(join(root, 'denylist.json'), 'utf8'));
+    return new Set((d.excluded ?? []).map((e) => e.qid));
+  } catch {
+    return new Set();
+  }
+}
+
 const ENDPOINT = 'https://query.wikidata.org/sparql';
 const UA = 'parley-rome-roster/0.1 (historical figure roster; contact via repo)';
 const BIRTH_YEAR_CUTOFF = 1900; // POLICY.md §1 — every Roman clears it by two millennia
@@ -103,6 +117,8 @@ const year = (iso) => {
   return m ? (m[1] === '-' ? -1 : 1) * Number.parseInt(m[2], 10) : null;
 };
 
+const DENIED = loadDenylist(ROOT);
+let deniedCount = 0;
 const byQid = new Map();
 
 for (const g of GROUPS) {
@@ -120,6 +136,7 @@ for (const g of GROUPS) {
     const name = r.pLabel?.value;
     const qid = r.p.value.split('/').pop();
     if (!name || /^Q\d+$/.test(name)) continue;
+    if (DENIED.has(qid)) { deniedCount++; continue; } // POLICY.md §2
 
     const fame = Number.parseInt(r.links.value, 10);
     if (fame < FLOOR) continue;

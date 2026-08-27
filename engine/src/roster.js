@@ -3,6 +3,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getCard } from './content.js';
 import { log } from './log.js';
+import { isExcluded, restrictionFor } from './denylist.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const ROSTER_PATH = join(ROOT, 'data', 'roster.json');
@@ -27,11 +28,20 @@ export function loadRoster() {
   }
   const raw = JSON.parse(readFileSync(ROSTER_PATH, 'utf8'));
   const entries = Array.isArray(raw) ? raw : (raw.entries ?? []);
+  const before = entries.length;
   roster = entries
-    .filter((e) => Number.isFinite(e.born) && e.born < BIRTH_YEAR_CUTOFF)
+    // Ancient and medieval birth years are often unrecorded; a missing one is acceptable
+    // for a figure whose reign ended centuries ago. A KNOWN year >= 1900 is not.
+    .filter((e) => !(Number.isFinite(e.born) && e.born >= BIRTH_YEAR_CUTOFF))
     .filter((e) => (e.fame ?? 0) >= FAME_FLOOR)
+    // POLICY.md §2 — the birth-year rule does not touch this, so the denylist must.
+    .filter((e) => !isExcluded(e.wikidata))
     .sort((a, b) => (b.fame ?? 0) - (a.fame ?? 0));
-  log.info('roster.loaded', { entries: roster.length, fameFloor: FAME_FLOOR });
+  log.info('roster.loaded', {
+    entries: roster.length,
+    dropped: before - roster.length,
+    fameFloor: FAME_FLOOR,
+  });
   return roster.length;
 }
 
@@ -59,6 +69,8 @@ export function searchRoster(query, limit = 24) {
       fame: e.fame ?? 0,
       tier: getCard(e.id) ? 'curated' : 'available',
       wikidata: e.wikidata ?? null,
+      // Surfaced so the UI can show the same badge curated cards get.
+      restricted: restrictionFor(e.wikidata),
     }));
 }
 

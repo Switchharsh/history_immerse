@@ -1,0 +1,45 @@
+{
+  "note": "Figures excluded outright, enforced in code. See POLICY.md §2. The born-before-1900 rule solves alive-vs-dead and nothing else — every person listed here passes it comfortably, which is exactly why this file exists. Matching is by Wikidata QID, because names are ambiguous and slugs drift.",
+  "appliesTo": [
+    "engine/src/roster.js — the tier-3 search index",
+    "tools/roster-*.mjs — dropped at build time, so they never reach data/",
+    "tools/draft-card.mjs — refuses to draft a card"
+  ],
+  "excluded": [
+    { "qid": "Q352", "name": "Adolf Hitler", "reason": "No framing survives contact with a chat UI. POLICY.md §2." },
+    { "qid": "Q2124", "name": "Heinrich Himmler", "reason": "Architect of the Holocaust. Nazi state leadership." },
+    { "qid": "Q47285", "name": "Joseph Goebbels", "reason": "Nazi state leadership." },
+    { "qid": "Q41287", "name": "Hermann Göring", "reason": "Nazi state leadership." },
+    { "qid": "Q57500", "name": "Reinhard Heydrich", "reason": "Nazi state leadership; Wannsee." },
+    { "qid": "Q44197", "name": "Rudolf Hess", "reason": "Nazi state leadership." },
+    { "qid": "Q57169", "name": "Adolf Eichmann", "reason": "Organised the deportations." },
+    { "qid": "Q48246", "name": "Josef Mengele", "reason": "Human experimentation at Auschwitz." }
+  ],
+  "restrictedByDefault": [
+    {
+      "qid": "Q855",
+      "name": "Joseph Stalin",
+      "reason": "Atrocity-linked. Curated scenarios only, never user-authored ones."
+    },
+    {
+      "qid": "Q5816",
+      "name": "Mao Zedong",
+      "reason": "Atrocity-linked. Curated scenarios only, never user-authored ones."
+    },
+    {
+      "qid": "Q720",
+      "name": "Genghis Khan",
+      "reason": "Atrocity-linked. Curated scenarios only, never user-authored ones."
+    },
+    {
+      "qid": "Q12967",
+      "name": "Leopold II of Belgium",
+      "reason": "Congo Free State. Curated scenarios only, never user-authored ones."
+    },
+    {
+      "qid": "Q1541",
+      "name": "Lucius Cornelius Sulla",
+      "reason": "The proscriptions. Curated scenarios only, never user-authored ones."
+    }
+  ]
+}

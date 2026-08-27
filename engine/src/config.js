@@ -25,8 +25,20 @@ export const config = {
   },
 
   models: {
-    // Characters get the better model; everything the user never sees runs on the cheap one.
-    character: process.env.PARLEY_MODEL_CHARACTER ?? 'gemini-2.5-flash',
+    /**
+     * Both roles default to Flash-Lite.
+     *
+     * The original plan gave characters the better model, but measured prices make that a
+     * bad trade here: gemini-2.5-flash costs 3x the input and 6.25x the output of
+     * flash-lite ($0.30/$2.50 against $0.10/$0.40 per 1M), and flash-lite already produced
+     * distinct, in-character dialogue in live testing. That is ~2,375 scenes inside $20
+     * rather than ~534.
+     *
+     * Raise PARLEY_MODEL_CHARACTER if the blind-read test says the voices need it — that
+     * is the evidence worth changing this on, not a hunch. Run `node tools/list-models.mjs`
+     * for what is available and what it costs.
+     */
+    character: process.env.PARLEY_MODEL_CHARACTER ?? 'gemini-2.5-flash-lite',
     utility: process.env.PARLEY_MODEL_UTILITY ?? 'gemini-2.5-flash-lite',
   },
 

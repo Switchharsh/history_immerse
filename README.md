@@ -123,6 +123,27 @@ Two things worth knowing if you extend the roster:
   returns an *empty* label for figures like Marie Curie, who then vanish from the roster
   with no error at all.
 
+## Rulers, 3000 BCE – 1900 CE
+
+```bash
+node tools/roster-rulers.mjs --floor 4      # data/roster-rulers.json
+node tools/roster-rulers.mjs --realm "king of france"
+```
+
+**12,443 rulers across ~1,700 realms**, with reign dates. Best-covered: pharaohs (425),
+Emperors of China (339), khans (323), Byzantine emperors (141), Kings of Assyria (136) and
+Babylon (128), Doges of Venice and Genoa, Prince-Electors, Emperors of Japan.
+
+Two things that are easy to get wrong, both documented in [docs/DATASETS.md](docs/DATASETS.md):
+
+- **Reign dates are qualifiers on the P39 statement** (`pq:P580`/`pq:P582`), not properties
+  of the person. `wdt:P39` — the truthy shortcut everyone reaches for — throws them away,
+  and without them you have an unsorted pile of names rather than a lineup.
+- **A subclass walk from `monarch` silently omits Persia, Egypt and Greece.** Nothing under
+  `Q116` mentions Persia at all; the throne is modelled through the title "King of Kings".
+  Pharaoh, archon and tyrant sit outside the tree too — and pharaoh is the single largest
+  ruling office by holder count.
+
 ## Rome
 
 The largest curated block, and the roster tooling goes deep on it:
