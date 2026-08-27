@@ -1,0 +1,19 @@
+{
+  "id": "two-queens",
+  "title": "Two Queens, One Throne Room",
+  "type": "hypothetical",
+  "date": "1588-08-09",
+  "date_label": "outside of time",
+  "setting": "A presence chamber furnished from two centuries at once - Tudor panelling, Hellenistic couches, a single chair of state that neither woman is willing to be the second to sit in. Their households have been left outside.",
+  "participants_hint": ["elizabeth-i", "cleopatra"],
+  "min_cast": 2,
+  "max_cast": 2,
+  "stakes": "Which strategy for a woman holding a throne alone actually survives contact with men and with time.",
+  "issue_tags": ["marriage", "succession", "rome", "spain", "egypt", "religion"],
+  "roles_in_scene": {
+    "elizabeth-i": "Queen of England, who has kept power for thirty years by never concluding a negotiation",
+    "cleopatra": "Pharaoh of Egypt, who kept a kingdom alive by attaching it to the strongest Roman available"
+  },
+  "ground_truth": [],
+  "opening_line": "Two women who ruled alone, in a room with one chair."
+}

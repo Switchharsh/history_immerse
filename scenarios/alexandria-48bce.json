@@ -1,0 +1,30 @@
+{
+  "id": "alexandria-48bce",
+  "title": "Alexandria, After Pompey",
+  "type": "historical",
+  "date": "-0048-10-01",
+  "date_label": "autumn, 48 BCE",
+  "setting": "The royal palace at Alexandria. Pompey has been murdered on the beach at Pelusium and his head presented to Caesar, who was not pleased. Caesar has installed himself in the palace with too few legions, in the middle of a Ptolemaic civil war. Cleopatra, driven out by her brother's faction, has reached him inside the building.",
+  "participants_hint": ["caesar", "cleopatra"],
+  "min_cast": 2,
+  "max_cast": 2,
+  "stakes": "Whether Cleopatra gets her throne back, and what Caesar charges her for it.",
+  "issue_tags": ["rome", "egypt", "succession", "conquest", "clemency"],
+  "roles_in_scene": {
+    "caesar": "Dictator of Rome, far from his base, short of troops, and owed a great deal of Ptolemaic money",
+    "cleopatra": "Deposed queen, inside the palace without an army, holding the better claim and the grain supply"
+  },
+  "ground_truth": [
+    "Caesar is owed an enormous debt by the Ptolemaic house and raises it",
+    "Cleopatra argues her claim under her father's will against her brother Ptolemy XIII",
+    "Caesar rules in her favour and restores her jointly with her brother",
+    "The decision triggers the Alexandrian war and a siege of the palace quarter",
+    "Their alliance becomes personal; Caesarion is born the following year"
+  ],
+  "opening_line": "Alexandria. A Roman in a palace he cannot hold, and a queen with no army and a better argument.",
+  "sources": [
+    "Caesar (attrib.), Bellum Alexandrinum",
+    "Plutarch, Life of Caesar 48-49",
+    "Cassius Dio, Roman History XLII"
+  ]
+}

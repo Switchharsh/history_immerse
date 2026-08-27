@@ -1,0 +1,20 @@
+{
+  "id": "conviction-and-doubt",
+  "title": "Conviction and Doubt",
+  "type": "hypothetical",
+  "date": "1431-05-30",
+  "date_label": "outside of time",
+  "setting": "A stone cell with three stools and a door that is not locked. Each of them has been condemned by a court that followed its own procedures correctly. Each of them could have escaped and did not.",
+  "participants_hint": ["joan-of-arc", "socrates", "marcus-aurelius"],
+  "min_cast": 2,
+  "max_cast": 3,
+  "stakes": "Whether certainty is a virtue or the failure that gets people killed - and whether refusing to run was courage or vanity.",
+  "issue_tags": ["church", "death", "law", "war", "power"],
+  "roles_in_scene": {
+    "joan-of-arc": "Nineteen, condemned for heresy, and entirely certain about the voices",
+    "socrates": "Seventy, condemned for impiety, and certain of nothing except the value of asking",
+    "marcus-aurelius": "Not condemned by anyone, which is the thing the other two will not let him forget"
+  },
+  "ground_truth": [],
+  "opening_line": "Three people who could have walked out. One door, and it is not locked."
+}

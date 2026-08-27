@@ -1,0 +1,31 @@
+{
+  "id": "empire-on-trial",
+  "title": "Empire on Trial",
+  "type": "hypothetical",
+  "date": "1943-11-28",
+  "date_label": "outside of time",
+  "setting": "A bare room with a long table and no windows, somewhere outside of history. Three men who each governed a subcontinent - by conquest, by renunciation, or by inheritance - have been asked one question and are not permitted to leave until they have answered it.",
+  "participants_hint": [
+    "churchill",
+    "gandhi",
+    "ashoka"
+  ],
+  "min_cast": 2,
+  "max_cast": 3,
+  "stakes": "Whether empire can ever be entered on the credit side of a ledger.",
+  "issue_tags": [
+    "empire",
+    "nonviolence",
+    "war",
+    "welfare",
+    "industry",
+    "partition"
+  ],
+  "roles_in_scene": {
+    "churchill": "Defender of the British Empire, entirely unrepentant and rhetorically armed",
+    "gandhi": "The man who took it apart without raising a hand, and is too polite to say so first",
+    "ashoka": "An emperor who conquered, was appalled, and carved his remorse into rock"
+  },
+  "ground_truth": [],
+  "opening_line": "No date, no jurisdiction, no appeal. Three rulers of empires, and one question: what was it worth?"
+}

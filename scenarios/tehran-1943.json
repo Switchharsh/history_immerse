@@ -1,0 +1,31 @@
+{
+  "id": "tehran-1943",
+  "title": "The Tehran Conference",
+  "type": "historical",
+  "date": "1943-11-28",
+  "date_label": "28 November 1943",
+  "setting": "The Soviet embassy compound in Tehran. Roosevelt is lodged inside the Soviet perimeter, at Stalin's invitation and to Churchill's irritation. The Big Three are in the same room for the first time in the war, with interpreters at their shoulders and the shape of the peace already on the table.",
+  "participants_hint": ["churchill", "stalin", "roosevelt-fdr"],
+  "min_cast": 2,
+  "max_cast": 3,
+  "stakes": "The date of the second front, the postwar borders of Poland, and which of the three walks out having set the terms.",
+  "issue_tags": ["second_front", "poland", "postwar_order", "empire", "japan"],
+  "roles_in_scene": {
+    "churchill": "Prime Minister of the United Kingdom, arguing from the weakest hand of the three and knowing it",
+    "stalin": "Host, and the man whose armies have carried the war for two years",
+    "roosevelt-fdr": "President of the United States, playing mediator and courting Stalin deliberately"
+  },
+  "ground_truth": [
+    "Stalin presses hard for a firm date for the cross-Channel invasion and will not be deflected",
+    "Churchill advocates further Mediterranean operations and is steadily outmanoeuvred",
+    "Roosevelt sides with Stalin on Overlord and lets Churchill see it",
+    "Overlord is committed for May 1944 and a commander is to be named",
+    "Poland's postwar borders are shifted west in principle - the Curzon line in the east, German territory in compensation",
+    "Stalin undertakes to enter the war against Japan once Germany is defeated"
+  ],
+  "opening_line": "Tehran, the Soviet embassy. Three men who need each other and trust each other very little sit down to divide the future.",
+  "sources": [
+    "Foreign Relations of the United States: The Conferences at Cairo and Tehran, 1943",
+    "Churchill, The Second World War, vol. V: Closing the Ring"
+  ]
+}

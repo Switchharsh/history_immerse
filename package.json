@@ -1,0 +1,20 @@
+{
+  "name": "parley",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Historical figures, played by LLM agents, conversing inside real or hypothetical situations.",
+  "scripts": {
+    "validate": "node tools/validate.mjs",
+    "roster:wikidata": "node tools/roster-wikidata.mjs",
+    "roster:pantheon": "node tools/roster-pantheon.mjs",
+    "card:draft": "node tools/draft-card.mjs",
+    "seed": "node tools/seed-firestore.mjs",
+    "engine": "npm --prefix engine run dev",
+    "web": "npm --prefix web run dev",
+    "dev": "node tools/dev.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  }
+}
