@@ -11,7 +11,10 @@
         "input": "Gemini 2.5 Flash Lite Text Input - Predictions",
         "output": "Gemini 2.5 Flash Lite Text Output - Predictions",
         "thinkingOutput": "Gemini 2.5 Flash Lite Thinking Text Output - Predictions"
-      }
+      },
+      "cheaperAlternatives": [
+        "Gemini 2.5 Flash Lite Thinking Text Output - Predictions = $0.4/M"
+      ]
     },
     "gemini-2.5-flash": {
       "inputPerMillion": 0.3,
@@ -19,9 +22,14 @@
       "thinkingOutputPerMillion": 2.5,
       "skus": {
         "input": "Gemini 2.5 Flash GA Text Input - Predictions",
-        "output": " Gemini 2.5 Flash GA Text Output - Predictions",
+        "output": "Gemini 2.5 Flash GA Text Output (Thinking On) - Predictions",
         "thinkingOutput": "Gemini 2.5 Flash GA Thinking Text Output - Predictions"
-      }
+      },
+      "cheaperAlternatives": [
+        "Gemini 2.5 Flash GA Text Output - Predictions = $2.5/M",
+        "Gemini 2.5 Flash GA Thinking Text Output - Predictions = $2.5/M",
+        "Gemini 2.5 Flash GA Text Output (Thinking On and Long) - Predictions = $2.5/M"
+      ]
     }
   }
 }

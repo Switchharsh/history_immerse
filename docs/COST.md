@@ -111,9 +111,38 @@ Real list prices, per 1M tokens, from your own billing catalog:
 | `gemini-2.5-flash-lite` | **$0.10** | **$0.40** |
 | `gemini-2.5-flash` | $0.30 | $2.50 |
 
-Only these two Gemini models resolve in `sci-swarm-615859` / `us-central1`. Every
-`gemini-2.0-*` and `*-latest` alias returns 404 there. Probe with `countTokens`, which is
+## Which models are actually live
+
+```bash
+node tools/list-models.mjs            # enumerate -> probe -> price, cheapest first
+node tools/list-models.mjs --location europe-west4
+```
+
+Model Garden publishes **29** predict-capable Gemini entries, but only **3** text models
+actually resolve in `sci-swarm-615859` / `us-central1`:
+
+| model | in $/1M | out $/1M | per 28-turn scene | scenes per $20 |
+|---|---|---|---|---|
+| **`gemini-2.5-flash-lite`** | **0.10** | **0.40** | **$0.0084** | **~2,375** |
+| `gemini-2.5-flash` | 0.30 | 2.50 | $0.037 | ~534 |
+| `gemini-2.5-pro` | 1.25 | 10.00 | $0.132 | ~151 |
+
+Everything Google lists as `gemini-3.x`, `gemini-3.5-*`, `gemini-3.6-*`, `gemini-3.7-*`
+and all `gemini-2.0-*` returns **404** in this region. Presence in Model Garden does not
+mean a model is served where you are calling from — probe with `countTokens`, which is
 free, rather than by generating.
+
+### A pricing trap worth knowing
+
+One model can match several SKU families at different prices. `gemini-2.5-flash` matches
+both a "Gemini 2.5 Flash" family at $0.15/$0.60 and a "Gemini 2.5 Flash **GA**" family at
+$0.30/$2.50, and nothing in the catalog says which one bills your call. There are also
+`Live` (a different API) and `(Long)` (>200k context) variants.
+
+Both tools now **take the highest applicable rate** and record the alternatives in
+`engine/prices.json` under `cheaperAlternatives`. Understating cost is the one direction a
+spend ceiling must never err in. A first run picked the cheaper family and would have had
+the meter reporting roughly half of true spend on `gemini-2.5-flash`.
 
 ## What $20 actually buys
 

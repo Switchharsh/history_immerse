@@ -1,0 +1,52 @@
+{
+  "project": "sci-swarm-615859",
+  "location": "us-central1",
+  "rows": [
+    {
+      "model": "gemini-2.5-flash-lite",
+      "inputPerMillion": 0.1,
+      "outputPerMillion": 0.4,
+      "ambiguous": false,
+      "priceVariants": [
+        "Gemini 2.5 Flash Lite Text Input - Predictions = $0.1/M",
+        "Gemini 2.5 Flash Lite Text Output - Predictions = $0.4/M",
+        "Gemini 2.5 Flash Lite Thinking Text Output - Predictions = $0.4/M"
+      ],
+      "scenePerRun": 0.00842,
+      "scenesPer20Usd": 2375
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "inputPerMillion": 0.3,
+      "outputPerMillion": 3.5,
+      "ambiguous": true,
+      "priceVariants": [
+        "Gemini 2.5 Flash GA Text Input - Predictions = $0.3/M",
+        "Gemini 2.5 Flash Text Input - Predictions = $0.15/M",
+        "Gemini 2.5 Flash Text Output (Thinking On) - Predictions = $3.5/M",
+        "Gemini 2.5 Flash Text Output (Thinking On and Long) - Predictions = $3.5/M",
+        "Gemini 2.5 Flash Thinking Text Output - Predictions = $3.5/M",
+        "Gemini 2.5 Flash GA Text Output (Thinking On) - Predictions = $2.5/M",
+        "Gemini 2.5 Flash GA Text Output - Predictions = $2.5/M",
+        "Gemini 2.5 Flash GA Thinking Text Output - Predictions = $2.5/M",
+        "Gemini 2.5 Flash GA Text Output (Thinking On and Long) - Predictions = $2.5/M",
+        "Gemini 2.5 Flash Text Output - Predictions = $0.6/M"
+      ],
+      "scenePerRun": 0.03745,
+      "scenesPer20Usd": 534
+    },
+    {
+      "model": "gemini-2.5-pro",
+      "inputPerMillion": 1.25,
+      "outputPerMillion": 10,
+      "ambiguous": false,
+      "priceVariants": [
+        "Gemini 2.5 Pro Text Input - Predictions = $1.25/M",
+        "Gemini 2.5 Pro Text Output - Predictions = $10/M",
+        "Gemini 2.5 Pro Thinking Text Output - Predictions = $10/M"
+      ],
+      "scenePerRun": 0.13175,
+      "scenesPer20Usd": 151
+    }
+  ]
+}

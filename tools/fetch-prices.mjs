@@ -74,7 +74,10 @@ async function allSkus() {
 function pricesFor(skus, modelWords) {
   const norm = (s) => s.toLowerCase();
   const isStandard = (d) =>
-    !/priority|batch|tuning|caching storage|live|preview/.test(d) &&
+    !/priority|batch|tuning|caching storage|preview/.test(d) &&
+    // "Live" is the bidirectional Live API and "(Long)" the >200k-context tier; neither
+    // applies to how this app calls the model.
+    !/\blive\b|\(long\)/.test(d) &&
     /text/.test(d) &&
     /prediction/.test(d);
 
@@ -84,12 +87,20 @@ function pricesFor(skus, modelWords) {
   });
 
   const pick = (re) => {
-    // Prefer the plainest description — "(Long)" and "Thinking" variants are qualified.
+    // Several SKU families can match one model at different prices (gemini-2.5-flash has
+    // both a "Flash" and a "Flash GA" family). Take the HIGHEST: understating cost is the
+    // one direction a spend ceiling must never err in.
     const matches = candidates
       .filter((s) => re.test(norm(s.description)))
-      .sort((a, b) => a.description.length - b.description.length);
-    const p = matches.length ? unitPrice(matches[0]) : null;
-    return p === null ? null : { perMillion: Math.round(p * 1e6 * 1e6) / 1e6, sku: matches[0].description };
+      .map((s) => ({ sku: s.description.trim(), usd: unitPrice(s) }))
+      .filter((m) => m.usd !== null)
+      .sort((a, b) => b.usd - a.usd);
+    if (!matches.length) return null;
+    return {
+      perMillion: Math.round(matches[0].usd * 1e6 * 1e6) / 1e6,
+      sku: matches[0].sku,
+      alternatives: matches.slice(1).map((m) => `${m.sku} = $${Math.round(m.usd * 1e6 * 1e6) / 1e6}/M`),
+    };
   };
 
   return {
@@ -125,6 +136,8 @@ for (const [model, words] of Object.entries(MODELS)) {
       output: p.output.sku,
       ...(p.thinkingOutput ? { thinkingOutput: p.thinkingOutput.sku } : {}),
     },
+    // Kept so a surprising bill can be traced back to a mis-picked SKU family.
+    cheaperAlternatives: [...(p.input.alternatives ?? []), ...(p.output.alternatives ?? [])],
   };
   console.error(
     `  ${model.padEnd(24)} in $${p.input.perMillion.toFixed(4)}/M   out $${p.output.perMillion.toFixed(4)}/M`,
