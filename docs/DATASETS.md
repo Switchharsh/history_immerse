@@ -12,10 +12,120 @@ live rather than recalled.
 | **Wikidata Action API** | dates, portraits, sitelink fame, exact | yes |
 | **Pantheon** | HPI fame ranking, ~11k–89k figures | yes, manual CSV |
 | Wikipedia / Wikiquote | article text, sourced quotations | yes |
+| **Plutarch + Suetonius** (Gutenberg) | **characterisation for 60 Greek/Roman figures** | **yes** |
 | Cross-verified notable people (2.29M) | scale ceiling | not wired |
 | Nomisma.org | Greek/Roman coin-issuing rulers | **unreachable — timed out** |
 | Trismegistos | ~500k ancient persons | **unreachable — connection refused** |
 | PBW, LGPN, Pleiades | Byzantine / Greek names / places | reachable, not yet wired |
+
+## Character and personality: there is no dataset
+
+The card fields that decide whether a figure is playable — `temperament`, `speech_style`,
+`verbal_tics` — have no structured source anywhere. Worth stating plainly, because
+Wikidata has a property that looks exactly like the answer and is not:
+
+**`P1552` ("has characteristic")** is not personality. On Julius Caesar its sole value is
+*Roman deity*. It carries formal attributes — deification, nobility, legal status — not
+disposition. Nothing else in Wikidata, Pantheon or DPRR encodes what a person was like.
+
+So characterisation comes from prose, and prose has a layout problem.
+
+### The truncation trap
+
+Wikipedia biographies are chronological. Birth, campaigns, death — and only then the
+sections describing what the person was *like*. Measured on this roster, the first
+characterisation heading falls at:
+
+| figure | article | first characterisation section at |
+|---|---|---|
+| Napoleon | 88,052 | **65,748** — "Personality" |
+| Abraham Lincoln | 74,715 | **68,203** — "Historical reputation" |
+| Julius Caesar | 64,387 | **52,416** — "Personal life" |
+| Genghis Khan | 64,989 | **52,168** — "Character and achievements" |
+| Marcus Aurelius | 60,454 | **58,241** — "Personal life" |
+
+Taking the first *N* characters of an article — the obvious approach, and what
+`draft-card.mjs` did with N=24,000 — misses **every one of them**. The drafter was being
+handed battles and birth dates and asked to write a temperament.
+
+`tools/lib/sources.mjs` selects sections by relevance instead of position: the lead, then
+characterisation sections, then narrative to fill the budget, then reassembled in document
+order. Apparatus (references, "In popular culture", statue inventories) is dropped.
+
+### Coverage is steeply fame-dependent
+
+Sampled across the ruler roster, share of figures whose article has any characterisation
+section at all:
+
+| fame (language editions) | has one | median article |
+|---|---|---|
+| 100+ | **75%** | ~120k chars |
+| 50–100 | 25% | ~43k |
+| 25–50 | 8% | ~25k |
+| 15–25 | 25% | ~28k |
+
+And absence is real, not a matching failure: **Elizabeth I, Cleopatra and Hannibal have no
+such section.** Their articles are pure narrative plus a "Legacy" section about reception.
+
+## Plutarch and Suetonius — ancient biography as characterisation
+
+For Greeks and Romans there is something better than a Wikipedia section, and it is public
+domain. Plutarch wrote character studies deliberately:
+
+> "For it is not Histories that I am writing, but Lives; and in the most illustrious deeds
+> there is not always a manifestation of virtue or vice, nay, a slight thing like a phrase
+> or a jest often makes a greater revelation of character than battles where thousands
+> fall." — *Life of Alexander*, 1
+
+That is the brief for a character card. Suetonius is blunter still — each Life ends with
+physical description, table habits, superstitions, how the man spoke.
+
+`tools/lib/classical.mjs` caches both from Project Gutenberg and indexes them into Lives:
+
+| corpus | Gutenberg | size | Lives |
+|---|---|---|---|
+| Plutarch, *Parallel Lives* (Dryden, 1683) | #674 | 4.3 MB | **50** |
+| Suetonius, *Twelve Caesars* (Thomson, 1796) | #6400 | 1.4 MB | **12** |
+
+Measured effect — Cato the Younger's Wikipedia article yields one thin section ("As a
+stoic"); Plutarch yields this:
+
+> "…even from his infancy, in his speech, his countenance, and all his childish pastimes,
+> he discovered an inflexible temper… He was rough and ungentle toward those that flattered
+> him, and still more unyielding to those who threatened him… he was not quickly or easily
+> provoked to anger, but if once incensed, he was no less difficult to pacify."
+
+**These are partisan sources.** Suetonius collected court gossip under a later dynasty with
+reasons to blacken earlier ones; Plutarch shaped anecdotes to a moral thesis. Material from
+them reaches the drafting prompt labelled as a claim, and is explicitly barred from
+`sample_lines` — ancient authors reconstruct speech as a matter of method, so what survives
+is a translator's English of an ancient author's version of what was said. It shapes
+`temperament` and `voice_note`, never a quotation.
+
+### Two traps in the scanned texts
+
+Both were silent, and both are covered by `npm test`:
+
+- **Name collision.** Thomson's headings are full Roman names, several nearly identical:
+  Vespasian is `T. FLAVIUS VESPASIANUS AUGUSTUS`, his son Titus is `TITUS FLAVIUS
+  VESPASIANUS AUGUSTUS`. A token-overlap match sent *Augustus* to **Titus's biography** —
+  and it would have reached the card as fact, with a citation. Suetonius is now matched by
+  an explicit table, and the fallback refuses anything ambiguous rather than guessing.
+- **OCR damage.** Claudius's heading is `TIBERIUS CLAUDIUS DRUSUS CAESAR. [465]`, with a
+  footnote marker. A stricter heading pattern indexed **11 of the 12 Caesars** — the kind
+  of gap that looks like completeness. The first heading also reads `CAIUS JULIUS CASAR`.
+
+### What the sourcing chain still cannot catch
+
+Wikiquote's **"Cato the Younger"** page carries a fragment from a speech delivered
+*Numantiae apud Equites*. Numantia was destroyed in **133 BCE**; Cato the Younger was born
+in **95 BCE**. The quotation is Cato the *Elder's*.
+
+A drafter instructed to copy only what its sources say — which is the correct instruction —
+will copy that too, correctly cited, and it will look fine. Dates are the only way to catch
+it. `draft-card.mjs` now warns when a subject's name is of the colliding kind (*the
+Elder/the Younger*, regnal numerals, Scipio, Ptolemy, Gracchus), but the human verification
+pass is what actually catches this class, and it is not optional.
 
 ## Wikidata for rulers — the two-stage pattern
 

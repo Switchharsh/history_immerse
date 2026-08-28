@@ -46,6 +46,7 @@ generally **not** to AI Studio keys.
 
 ```bash
 npm run validate                                    # schema + policy check on all content
+npm test                                            # offline tests for the source-selection logic
 node engine/scripts/preview-prompt.mjs churchill tehran-1943   # the exact prompt a figure gets
 node engine/scripts/preview-prompt.mjs caesar caesar-on-mars   # the knowledge-cutoff rule at work
 node engine/scripts/smoke.mjs empire-on-trial 10               # a whole scene in the terminal
@@ -111,10 +112,12 @@ code; the rest are documented in `docs/ROSTER.md` but not wired up.
 | [Wikiquote](https://en.wikiquote.org) | CC BY-SA 4.0 | Sourced quotations — the `sample_lines` that anchor each figure's voice | yes |
 | [Wikimedia Commons](https://commons.wikimedia.org) | per file; all shipped portraits are public domain | Portraits beside dialogue and in roster search | yes |
 | [Pantheon](https://pantheon.world) | see download page | Fame ranking — HPI and language-edition count across ~11k–89k biographies | yes |
+| [Plutarch, *Parallel Lives*](https://www.gutenberg.org/ebooks/674) (Dryden, 1683) | public domain | Ancient characterisation for 50 Greek and Roman figures — manner, habit, anecdote | yes |
+| [Suetonius, *Twelve Caesars*](https://www.gutenberg.org/ebooks/6400) (Thomson, 1796) | public domain | Same, for the 12 Caesars: appearance, habits, how each man spoke | yes |
 | [Cross-verified notable people, 3500BC–2018AD](https://doi.org/10.1038/s41597-022-01369-4) | CC BY 4.0 | 2.29M individuals; the ceiling for roster scale | no |
 | [Avalon Project, Yale](https://avalon.law.yale.edu) | free scholarly access | Primary documents behind the Tehran ground-truth beats | no |
 
-Two things worth knowing if you extend the roster:
+Four things worth knowing if you extend the roster:
 
 - **The obvious SPARQL query does not work.** Scanning `wikibase:sitelinks` against
   `wdt:P31 wd:Q5` times out on the public WDQS endpoint at every fame band and with `LIMIT`
@@ -122,6 +125,12 @@ Two things worth knowing if you extend the roster:
 - **Wikidata moved language-neutral labels to the `mul` code.** Asking for `languages=en`
   returns an *empty* label for figures like Marie Curie, who then vanish from the roster
   with no error at all.
+- **There is no personality dataset.** Wikidata's `P1552` ("has characteristic") looks like
+  the answer and is not — on Julius Caesar its only value is *Roman deity*. Characterisation
+  exists only as prose.
+- **Do not take the first N characters of an article.** Wikipedia biographies are
+  chronological, so "Personality" and "Character" sit near the end — Napoleon's begins at
+  character 65,748 of 88,052. `tools/lib/sources.mjs` selects sections by relevance instead.
 
 ## Rulers, 3000 BCE – 1900 CE
 

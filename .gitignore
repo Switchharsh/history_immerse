@@ -10,3 +10,7 @@ data/raw/
 web/dist/
 data/portrait-cache/
 data/roster-rulers.partial.json
+
+# Public-domain classical texts, re-downloadable from Project Gutenberg on demand
+# (Plutarch 4.3MB + Suetonius 1.4MB). Cached by tools/lib/classical.mjs.
+data/corpora/

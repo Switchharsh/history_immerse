@@ -39,7 +39,10 @@ function loadDenylist(root) {
 }
 
 const ENDPOINT = 'https://query.wikidata.org/sparql';
-const UA = 'parley-rome-roster/0.1 (historical figure roster; contact via repo)';
+// Wikimedia's UA policy asks for a real contact; anonymous agents get rate-limited
+// harder or 403'd outright. Override with PARLEY_CONTACT if you fork this.
+const CONTACT = process.env.PARLEY_CONTACT ?? 'deharshkhandelwal@gmail.com';
+const UA = `parley-rome-roster/0.1 (historical figure roster; ${CONTACT})`;
 const BIRTH_YEAR_CUTOFF = 1900; // POLICY.md §1 — every Roman clears it by two millennia
 
 const argv = process.argv.slice(2);

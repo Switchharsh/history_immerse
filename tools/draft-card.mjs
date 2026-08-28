@@ -18,9 +18,14 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { config } from '../engine/src/config.js';
 import { getProvider } from '../engine/src/providers/index.js';
+import { fetchArticle, fetchQuotes } from './lib/sources.mjs';
+import { fetchClassical } from './lib/classical.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const UA = 'parley-card-drafter/0.1 (historical figure roster; contact via repo)';
+// Wikimedia's UA policy asks for a real contact; anonymous agents get rate-limited
+// harder or 403'd outright. Override with PARLEY_CONTACT if you fork this.
+const CONTACT = process.env.PARLEY_CONTACT ?? 'deharshkhandelwal@gmail.com';
+const UA = `parley-card-drafter/0.1 (historical figure roster; ${CONTACT})`;
 const BIRTH_YEAR_CUTOFF = 1900; // POLICY.md §1
 
 const argv = process.argv.slice(2);
@@ -61,20 +66,35 @@ if (!summary || summary.type === 'https://mediawiki.org/wiki/HyperSwitch/errors/
   process.exit(1);
 }
 
-/** Lead section plus the first few body sections — enough for beliefs and key events. */
-const extractJson = await get(
-  `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&exsectionformat=plain&titles=${encodeURIComponent(subject)}&redirects=1&format=json`,
-);
-const pages = Object.values(extractJson?.query?.pages ?? {});
-const article = (pages[0]?.extract ?? summary.extract ?? '').slice(0, 24000);
+/**
+ * Article prose, weighted toward the sections that describe the person.
+ *
+ * This used to be `extract.slice(0, 24000)`, which sounds harmless and was not: Wikipedia
+ * biographies are chronological, so the "Personality" and "Character" sections sit near
+ * the END. Measured on this roster, Napoleon's lands at character 65,748 of 88,052 and
+ * Marcus Aurelius's at 58,241 of 60,454 — every one of them outside the window. The model
+ * was being handed campaigns and birth dates and asked to write a temperament.
+ */
+const harvested = await fetchArticle(summary.title, { budget: 24000 });
+const article = harvested?.text ?? summary.extract ?? '';
+if (harvested?.characterisationSections?.length) {
+  console.error(`  characterisation sections: ${harvested.characterisationSections.join(', ')}`);
+} else {
+  console.error('  ! no characterisation section in the article — temperament will be inferred from narrative');
+}
 
 /** Wikiquote gives sourced quotations — the few-shot lines that stop everyone sounding alike. */
-const quoteJson = await get(
-  `https://en.wikiquote.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=${encodeURIComponent(subject)}&redirects=1&format=json`,
-);
-const quotePage = Object.values(quoteJson?.query?.pages ?? {})[0];
-const quotes = (quotePage?.extract ?? '').slice(0, 14000);
+const quotes = (await fetchQuotes(subject)).slice(0, 14000);
 if (!quotes) console.error('  ! no Wikiquote page — the card will lean on voice_note instead');
+
+/**
+ * Plutarch and Suetonius, for the figures they cover. Ancient biography is characterisation
+ * by design — the anecdote, the habit, the remark — which is exactly what the narrative
+ * sections above are worst at. It is also partisan, so it reaches the prompt clearly
+ * labelled as a claim rather than as fact.
+ */
+const classical = argv.includes('--no-classical') ? null : await fetchClassical(summary.title, { budget: 10000 });
+if (classical) for (const c of classical) console.error(`  classical: ${c.work} — "${c.life}" (${c.text.length} chars)`);
 
 /** Structured facts, and the birth year the policy filter needs. */
 const wdId = summary.wikibase_item;
@@ -146,23 +166,49 @@ const system = `You draft character cards for a history simulation in which real
 The card is a director's brief, not an encyclopaedia entry. What matters is what makes this person argue differently from everyone else in the room.
 
 - core_beliefs: 3-5 convictions they would defend under pressure. Write the belief as they held it, including the parts a modern reader dislikes. Not achievements.
-- temperament: how they behave in a room — what they do when contradicted, when bored, when winning. Concrete.
+- temperament: how they behave in a room — what they do when contradicted, when bored, when winning. Concrete. Where an ANCIENT BIOGRAPHY block is supplied, it is your best source for this: prefer its specific observed habits over generalities drawn from the narrative.
 - speech_style: sentence shape, register, vocabulary, rhythm. Specific enough that a reader could imitate it.
 - verbal_tics: 3-4 habits — a recurring phrase, a rhetorical move, a physical habit while talking.
 - positions: issues they held a real, contestable stance on, phrased so another figure could disagree. Use short snake_case issue keys.
-- sample_lines: ONLY genuine quotations that appear verbatim in the Wikiquote material provided. Copy the exact wording and cite where it came from. If the material has no reliably sourced quotations, return an EMPTY array — do not paraphrase, reconstruct, or supply a famous line from memory. Fabricated quotations are the worst failure this card can contain.
+- sample_lines: ONLY genuine quotations that appear verbatim in the WIKIQUOTE material provided. Copy the exact wording and cite where it came from. If the material has no reliably sourced quotations, return an EMPTY array — do not paraphrase, reconstruct, or supply a famous line from memory. Fabricated quotations are the worst failure this card can contain.
+  Remarks quoted inside an ANCIENT BIOGRAPHY block are NOT eligible, however vivid. Plutarch and Suetonius reconstruct speech as a matter of method, and what reaches us is a translator's English of an ancient author's version of what was said. Use those remarks to shape voice_note, speech_style and verbal_tics instead, where they belong.
 - voice_note: REQUIRED when sample_lines is empty or thin. Explain how to build the voice without quotations, and name the source problem (quotes are apocryphal, survive only in hostile accounts, are translations, etc.).
 - sensitivities: documented views or acts a modern audience finds objectionable, and how to portray them honestly as period conviction without amplifying them. Say "None documented that require special handling." if that is genuinely the case.
 
 Write in the third person throughout, as a historian would.`;
 
+const classicalBlock = classical
+  ? classical
+      .map(
+        (c) => `--- ${c.work}, "${c.life}" ---
+[HOW TO USE THIS: ${c.caution} Treat every anecdote as what this author claims, not as
+established fact. It is excellent evidence of how the figure was PORTRAYED and is the best
+available guide to manner, habit and speech. Do not copy its narrative claims into
+key_events unless the Wikipedia material above also supports them.]
+
+${c.text}`,
+      )
+      .join('\n\n')
+  : '';
+
 const user = `SUBJECT: ${summary.title} (born ${born}${died ? `, died ${died}` : ''})
 
-WIKIPEDIA:
+WIKIPEDIA (section headings preserved; sections describing the person were selected in
+preference to narrative, so this is not the whole article and gaps in the chronology are
+expected):
 """
 ${article}
 """
-
+${
+  classicalBlock
+    ? `
+ANCIENT BIOGRAPHY (characterisation, not fact — read the usage note in each block):
+"""
+${classicalBlock}
+"""
+`
+    : ''
+}
 WIKIQUOTE (the ONLY permitted source for sample_lines):
 """
 ${quotes || '(no Wikiquote page exists for this figure)'}
@@ -230,8 +276,23 @@ writeFileSync(path, JSON.stringify(card, null, 2) + '\n');
 
 console.error(`\nWrote ${path}`);
 if (usage) console.error(`tokens: in=${usage.promptTokenCount} out=${usage.candidatesTokenCount}`);
+// Same-name conflation is the failure mode the sourcing chain cannot catch by itself. It
+// is upstream of us: en.wikiquote's "Cato the Younger" page carries a fragment from a
+// speech delivered at Numantia, which was destroyed in 133 BCE — 38 years before the
+// Younger was born. It is Cato the Elder's. A drafter that faithfully copies its sources,
+// as this one is instructed to, will faithfully copy that too.
+const AMBIGUOUS = /\b(the elder|the younger|the great|[IVX]+)\b|^(cato|pliny|scipio|brutus|gracch|seneca|antiochus|ptolemy|cyrus|darius)/i;
+if (AMBIGUOUS.test(summary.title)) {
+  console.error(
+    `\n  ! "${summary.title}" shares a name with other historical figures.\n` +
+      `    Check sample_lines and key_events for material belonging to the other one —\n` +
+      `    Wikipedia and Wikiquote both conflate them, and dates are the way to tell.`,
+  );
+}
+
 console.error(`\nBefore this card is usable:
-  1. Check every sample_line against Wikiquote and flip verified:true. Delete any you cannot find.
+  1. Check every sample_line against Wikiquote AND against the figure's dates — a quotation
+     can be correctly copied from the cited page and still belong to someone else.
   2. Fill in relationships{} against other cards in the roster.
   3. Check the portrait's license tag on its Commons file page.
   4. Set default_knowledge_cutoff to the real death date, not 1 January.
