@@ -168,6 +168,30 @@
       "type": "boolean",
       "description": "Card is machine-drafted and has not had its human editing pass yet."
     },
+    "evidence": {
+      "type": "object",
+      "description": "What surviving record this card's personality rests on. Written by tools/score-evidence.mjs. A card below the playable tier is either invention or a deliberate, documented exception — see POLICY.md.",
+      "required": ["tier", "signals"],
+      "additionalProperties": false,
+      "properties": {
+        "tier": { "enum": ["strong", "good", "thin", "none"] },
+        "signals": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ownWriting": { "type": "boolean", "description": "Letters, memoirs, philosophy — unmediated access to how they thought." },
+            "recordedSpeech": { "type": "boolean", "description": "Sourced quotations that are the subject speaking, not others about them." },
+            "ancientBiography": { "type": "boolean", "description": "A Life devoted to them by Plutarch, Suetonius or similar." },
+            "description": { "type": "boolean", "description": "A Wikipedia section on character, appearance or habits." }
+          }
+        },
+        "caveats": { "type": "array", "items": { "type": "string" } },
+        "low_evidence": {
+          "type": "boolean",
+          "description": "Drafted below the playable bar with --force. The temperament is substantially invented."
+        }
+      }
+    },
     "sprite": {
       "type": "object",
       "description": "Overrides the inferred sprite. Silhouette matters more than colour: a viewer should place the figure from the outline alone.",

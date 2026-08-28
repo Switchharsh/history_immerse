@@ -133,3 +133,50 @@ test('indexLives tolerates a trailing footnote marker', () => {
   const text = ['AULUS VITELLIUS.', 'x', 'TIBERIUS CLAUDIUS DRUSUS CAESAR. [465]', 'y'.repeat(9000), 'AULUS VITELLIUS.', 'z'.repeat(9000)].join('\n');
   assert.ok(indexLives(text).has('TIBERIUS CLAUDIUS DRUSUS CAESAR'));
 });
+
+// --- evidence gating -------------------------------------------------------
+import { classifyQuoteSections, tierFor, PLAYABLE } from './evidence.mjs';
+
+test('"Quotes about X" is not the subject speaking', () => {
+  const r = classifyQuoteSections(['Quotes', 'Quotes about Napoleon', 'Attributed', 'Misattributed'], 'Napoleon');
+  assert.deepEqual(r.own, ['Quotes']);
+  assert.deepEqual(r.about, ['Quotes about Napoleon']);
+  assert.equal(r.unreliable.length, 2);
+});
+
+test('a play by another author is not the subject speaking', () => {
+  // Regression: Cleopatra's Wikiquote page files Shakespeare under her own quotes.
+  const r = classifyQuoteSections(['Quotes', 'Antony and Cleopatra by William Shakespeare (1623)'], 'Cleopatra');
+  assert.deepEqual(r.own, ['Quotes']);
+  assert.equal(r.notVoice.length, 1);
+});
+
+test("a memoir titled after the subject still counts as theirs", () => {
+  const r = classifyQuoteSections(['Memoirs of Napoleon (1829-1831)', 'Napoleon in Exile (1822)'], 'Napoleon');
+  assert.equal(r.own.length, 2, 'these are collections of his sayings, not someone else’s work');
+});
+
+test('inscriptions, mummies and Greek sources are not a voice', () => {
+  // Ramesses II's entire Wikiquote page. He has no "Quotes" section at all.
+  const r = classifyQuoteSections(['Inscriptions', 'Greek sources', 'Legacy', 'Mummy'], 'Ramesses II');
+  assert.deepEqual(r.own, []);
+  assert.equal(r.notVoice.length, 4);
+});
+
+test('own writing alone clears the bar; a lone description does not', () => {
+  assert.ok(PLAYABLE.has(tierFor({ ownWriting: true, recordedSpeech: false, ancientBiography: false, description: false })));
+  assert.ok(!PLAYABLE.has(tierFor({ ownWriting: false, recordedSpeech: false, ancientBiography: false, description: true })));
+});
+
+test('an ancient Life alone clears the bar', () => {
+  // Regression: counting Plutarch's 164,000-character Life of Antony as equal to a
+  // two-paragraph Wikipedia section rated Mark Antony "thin".
+  const antony = { ownWriting: false, recordedSpeech: false, ancientBiography: true, description: false };
+  assert.ok(PLAYABLE.has(tierFor(antony)));
+});
+
+test('two independent kinds beat one', () => {
+  assert.equal(tierFor({ ownWriting: false, recordedSpeech: true, ancientBiography: false, description: true }), 'good');
+  assert.equal(tierFor({ ownWriting: false, recordedSpeech: true, ancientBiography: false, description: false }), 'thin');
+  assert.equal(tierFor({ ownWriting: false, recordedSpeech: false, ancientBiography: false, description: false }), 'none');
+});

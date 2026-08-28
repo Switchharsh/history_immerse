@@ -253,6 +253,65 @@ fame ranking and portraits. Use both.
 - **Pleiades** (`pleiades.stoa.org`) — ancient places. Useful for scenario settings, not
   for characters.
 
+## Gating on evidence rather than fame
+
+Indexing a figure is not the same as being able to play them, and **fame is the wrong test**
+for the difference. Language-edition count measures how much has been written *about*
+someone; a personality needs something to survive *of* them. `tools/score-evidence.mjs`
+measures the latter directly — see [POLICY.md §1b](../POLICY.md) for the rule and
+`tools/lib/evidence.mjs` for what each signal means.
+
+```bash
+node tools/score-evidence.mjs "Ramesses II"      # one figure, with reasoning
+node tools/score-evidence.mjs --cards            # audit the curated roster
+node tools/score-evidence.mjs --bands            # where fame and evidence diverge
+```
+
+Sampled across the ruler roster, the share with enough surviving evidence for a defensible
+sketch:
+
+| fame band | playable | what is down there |
+|---|---|---|
+| 100+ editions | 86% | |
+| 50–100 | 79% | |
+| 25–50 | 29% | |
+| 15–25 | **0%** | Marduk-kabit-ahheshu, Eadberht III Præn, Boiorix, Chnodomarius |
+| below 15 | **0%** | king-lists |
+
+**The cliff is at ~25 editions; the old fame floor was 15.** Of 12,443 rulers, roughly
+1,800 clear the bar.
+
+### Four traps found while building this
+
+Each produced a *confident* result from material the subject never uttered, which is worse
+than an obviously missing one. All are covered by `npm test`.
+
+- **Wikiquote redirects historical figures to films.** `Spartacus` resolves to
+  `Spartacus (film)`, `Boudica` to `Boudica (film)`. The scorer initially rated Spartacus
+  as having a well-attested voice — built from Dalton Trumbo's 1960 screenplay.
+- **"Quotes about X" is on nearly every page**, is often the longest section, and is other
+  people talking. Counting it builds a voice out of a figure's enemies.
+- **Someone else's play, filed under the subject.** Cleopatra's page lists *Antony and
+  Cleopatra by William Shakespeare (1623)* among her quotations. The `" by <someone else>"`
+  construction distinguishes it from Napoleon's legitimate *Memoirs of Napoleon (1829-1831)*.
+- **A law code is not a personality.** Hammurabi has a Wikisource author page and scored top
+  tier beside Marcus Aurelius. His entire corpus is the Code of Hammurabi — formulaic royal
+  register cut by scribes. Cyrus the Great's is the Cyrus cylinder. Both now excluded by
+  genre.
+
+### The probe was biased, and had to be rebuilt
+
+The first version looked up `Author:<name>` on **English** Wikisource. That instrument
+quietly favours the Anglophone world: every US president has an author page for their
+proclamations, so all of them passed, while Simón Bolívar failed — his author page is on
+*Spanish* Wikisource. So did Constantine, filed as `Author:Constantine (c. 272-337)`, and
+Qin Shi Huang (zh), and Umar ibn Al-Khattāb (la, nl). The resulting top tier was an artefact
+of the probe rather than of the historical record.
+
+It now asks **Wikidata** for Wikisource sitelinks in *any* language, plus `P800`. Rerunning
+moved Bolívar, Constantine, Ivan the Terrible, Tito and Maimonides above the bar and took
+the top-120 pass from 88% to 95% playable.
+
 ## A caution about depth
 
 The roster tooling can index tens of thousands of figures. That is not the same as being

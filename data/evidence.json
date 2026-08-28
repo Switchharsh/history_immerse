@@ -1,0 +1,1945 @@
+{
+  "scored": 120,
+  "source": "data/roster-rulers.json",
+  "entries": [
+    {
+      "title": "Abraham Lincoln",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 75073,
+      "id": "abraham-lincoln",
+      "fame": 295,
+      "qid": "Q91"
+    },
+    {
+      "title": "Muhammad",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 81982,
+      "id": "muhammad",
+      "fame": 287,
+      "qid": "Q9458"
+    },
+    {
+      "title": "Napoleon",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 88472,
+      "id": "napoleon",
+      "fame": 286,
+      "qid": "Q517"
+    },
+    {
+      "title": "Joseph Stalin",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 95735,
+      "id": "joseph-stalin",
+      "fame": 278,
+      "qid": "Q855"
+    },
+    {
+      "title": "George Washington",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 63164,
+      "id": "george-washington",
+      "fame": 273,
+      "qid": "Q23"
+    },
+    {
+      "title": "Alexander the Great",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": true,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 89556,
+      "id": "alexander-the-great",
+      "fame": 262,
+      "qid": "Q8409"
+    },
+    {
+      "title": "Mustafa Kemal Atatürk",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 108062,
+      "id": "mustafa-kemal-ataturk",
+      "fame": 253,
+      "qid": "Q5152"
+    },
+    {
+      "title": "Franklin Delano Roosevelt",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 88879,
+      "id": "franklin-delano-roosevelt",
+      "fame": 245,
+      "qid": "Q8007"
+    },
+    {
+      "title": "Augustus",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": true,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 83770,
+      "id": "augustus",
+      "fame": 244,
+      "qid": "Q1405"
+    },
+    {
+      "title": "Christopher Columbus",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 68963,
+      "id": "christopher-columbus",
+      "fame": 244,
+      "qid": "Q7322"
+    },
+    {
+      "title": "Mao Zedong",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 83154,
+      "id": "mao-zedong",
+      "fame": 231,
+      "qid": "Q5816"
+    },
+    {
+      "title": "Thomas Jefferson",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 101302,
+      "id": "thomas-jefferson",
+      "fame": 224,
+      "qid": "Q11812"
+    },
+    {
+      "title": "Charles de Gaulle",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 99369,
+      "id": "charles-de-gaulle",
+      "fame": 220,
+      "qid": "Q2042"
+    },
+    {
+      "title": "Harry S. Truman",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 117934,
+      "id": "harry-s-truman",
+      "fame": 197,
+      "qid": "Q11613"
+    },
+    {
+      "title": "Qin Shi Huang",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 42196,
+      "id": "qin-shi-huang",
+      "fame": 196,
+      "qid": "Q7192"
+    },
+    {
+      "title": "Theodore Roosevelt",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 107735,
+      "id": "theodore-roosevelt",
+      "fame": 192,
+      "qid": "Q33866"
+    },
+    {
+      "title": "Dwight D. Eisenhower",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 98928,
+      "id": "dwight-d-eisenhower",
+      "fame": 190,
+      "qid": "Q9916"
+    },
+    {
+      "title": "Woodrow Wilson",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 91980,
+      "id": "woodrow-wilson",
+      "fame": 190,
+      "qid": "Q34296"
+    },
+    {
+      "title": "Charlemagne",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 62764,
+      "id": "charlemagne",
+      "fame": 186,
+      "qid": "Q3044"
+    },
+    {
+      "title": "John Adams",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 97088,
+      "id": "john-adams",
+      "fame": 186,
+      "qid": "Q11806"
+    },
+    {
+      "title": "Elizabeth I of England",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 66578,
+      "id": "elizabeth-i-of-england",
+      "fame": 185,
+      "qid": "Q7207"
+    },
+    {
+      "title": "Louis XIV of France",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 89876,
+      "id": "louis-xiv-of-france",
+      "fame": 183,
+      "qid": "Q7742"
+    },
+    {
+      "title": "Vasco da Gama",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "good",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 37999,
+      "id": "vasco-da-gama",
+      "fame": 182,
+      "qid": "Q7328"
+    },
+    {
+      "title": "Maxim Gorky",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 56032,
+      "id": "maxim-gorky",
+      "fame": 182,
+      "qid": "Q12706"
+    },
+    {
+      "title": "Peter the Great",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 51585,
+      "id": "peter-the-great",
+      "fame": 181,
+      "qid": "Q8479"
+    },
+    {
+      "title": "Ashoka",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 85721,
+      "id": "ashoka",
+      "fame": 178,
+      "qid": "Q8589"
+    },
+    {
+      "title": "Marcus Aurelius",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 60704,
+      "id": "marcus-aurelius",
+      "fame": 176,
+      "qid": "Q1430"
+    },
+    {
+      "title": "James Madison",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 75654,
+      "id": "james-madison",
+      "fame": 176,
+      "qid": "Q11813"
+    },
+    {
+      "title": "Simón Bolívar",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 55247,
+      "id": "simon-bolivar",
+      "fame": 175,
+      "qid": "Q8605"
+    },
+    {
+      "title": "Victoria",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "good",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 11374,
+      "id": "victoria",
+      "fame": 173,
+      "qid": "Q9439"
+    },
+    {
+      "title": "Cleopatra",
+      "signals": {
+        "ownWriting": false,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "none",
+      "caveats": [
+        "Wikiquote material is not the subject speaking: Antony and Cleopatra by William Shakespeare (1623).",
+        "Long article but no recorded speech or character section — deeds are documented, interiority is not."
+      ],
+      "playable": false,
+      "articleChars": 84048,
+      "id": "cleopatra",
+      "fame": 171,
+      "qid": "Q635"
+    },
+    {
+      "title": "Hernán Cortés",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 49123,
+      "id": "hernan-cortes",
+      "fame": 171,
+      "qid": "Q7326"
+    },
+    {
+      "title": "Nikita Khrushchev",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 99578,
+      "id": "nikita-khrushchev",
+      "fame": 170,
+      "qid": "Q35314"
+    },
+    {
+      "title": "Akbar",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 73517,
+      "id": "akbar",
+      "fame": 167,
+      "qid": "Q8597"
+    },
+    {
+      "title": "John Quincy Adams",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 70026,
+      "id": "john-quincy-adams",
+      "fame": 166,
+      "qid": "Q11816"
+    },
+    {
+      "title": "Andrew Jackson",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 70054,
+      "id": "andrew-jackson",
+      "fame": 164,
+      "qid": "Q11817"
+    },
+    {
+      "title": "Herbert Hoover",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 78250,
+      "id": "herbert-hoover",
+      "fame": 162,
+      "qid": "Q35236"
+    },
+    {
+      "title": "Calvin Coolidge",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 58592,
+      "id": "calvin-coolidge",
+      "fame": 161,
+      "qid": "Q36023"
+    },
+    {
+      "title": "James Monroe",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 74582,
+      "id": "james-monroe",
+      "fame": 158,
+      "qid": "Q11815"
+    },
+    {
+      "title": "Ulysses S. Grant",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [
+        "Wikiquote material is not the subject speaking: In fiction."
+      ],
+      "playable": true,
+      "articleChars": 97976,
+      "id": "ulysses-s-grant",
+      "fame": 158,
+      "qid": "Q34836"
+    },
+    {
+      "title": "Constantine the Great",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 79350,
+      "id": "constantine-the-great",
+      "fame": 157,
+      "qid": "Q8413"
+    },
+    {
+      "title": "Saint Peter",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 80341,
+      "id": "saint-peter",
+      "fame": 154,
+      "qid": "Q33923"
+    },
+    {
+      "title": "Saladin",
+      "signals": {
+        "ownWriting": false,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "good",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 73108,
+      "id": "saladin",
+      "fame": 154,
+      "qid": "Q8581"
+    },
+    {
+      "title": "Suleiman the Magnificent",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 46288,
+      "id": "suleiman-the-magnificent",
+      "fame": 153,
+      "qid": "Q8474"
+    },
+    {
+      "title": "Ho Chi Minh",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 65835,
+      "id": "ho-chi-minh",
+      "fame": 153,
+      "qid": "Q36014"
+    },
+    {
+      "title": "Catherine II of Russia",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 86664,
+      "id": "catherine-ii-of-russia",
+      "fame": 152,
+      "qid": "Q36450"
+    },
+    {
+      "title": "Sun Yat-sen",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 59938,
+      "id": "sun-yat-sen",
+      "fame": 152,
+      "qid": "Q8573"
+    },
+    {
+      "title": "Umar ibn Al-Khattāb",
+      "signals": {
+        "ownWriting": false,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "none",
+      "caveats": [],
+      "playable": false,
+      "articleChars": 0,
+      "id": "umar-ibn-al-khattab",
+      "fame": 151,
+      "qid": "Q8467"
+    },
+    {
+      "title": "Alī ibn Abī Ṭālib",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 62570,
+      "id": "ali-ibn-abi-talib",
+      "fame": 151,
+      "qid": "Q39619"
+    },
+    {
+      "title": "Cyrus the Great",
+      "signals": {
+        "ownWriting": false,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "thin",
+      "caveats": [
+        "Wikisource lists only impersonal documents (Cyrus cylinder) — a bureaucracy, not a voice."
+      ],
+      "playable": false,
+      "articleChars": 49419,
+      "id": "cyrus-the-great",
+      "fame": 150,
+      "qid": "Q8423"
+    },
+    {
+      "title": "James A. Garfield",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 85166,
+      "id": "james-a-garfield",
+      "fame": 147,
+      "qid": "Q34597"
+    },
+    {
+      "title": "William Howard Taft",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 99311,
+      "id": "william-howard-taft",
+      "fame": 147,
+      "qid": "Q35648"
+    },
+    {
+      "title": "Martin Van Buren",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 67663,
+      "id": "martin-van-buren",
+      "fame": 146,
+      "qid": "Q11820"
+    },
+    {
+      "title": "Grover Cleveland",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 66758,
+      "id": "grover-cleveland",
+      "fame": 146,
+      "qid": "Q35171"
+    },
+    {
+      "title": "Andrew Johnson",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 90891,
+      "id": "andrew-johnson",
+      "fame": 144,
+      "qid": "Q8612"
+    },
+    {
+      "title": "James K. Polk",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 93503,
+      "id": "james-k-polk",
+      "fame": 144,
+      "qid": "Q11891"
+    },
+    {
+      "title": "Zachary Taylor",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [
+        "Only 1 sourced line(s) — too thin to anchor a voice."
+      ],
+      "playable": true,
+      "articleChars": 54443,
+      "id": "zachary-taylor",
+      "fame": 144,
+      "qid": "Q11896"
+    },
+    {
+      "title": "James Buchanan",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 63053,
+      "id": "james-buchanan",
+      "fame": 144,
+      "qid": "Q12325"
+    },
+    {
+      "title": "John Tyler",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 83649,
+      "id": "john-tyler",
+      "fame": 143,
+      "qid": "Q11881"
+    },
+    {
+      "title": "William McKinley",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 77034,
+      "id": "william-mckinley",
+      "fame": 142,
+      "qid": "Q35041"
+    },
+    {
+      "title": "Millard Fillmore",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 67263,
+      "id": "millard-fillmore",
+      "fame": 141,
+      "qid": "Q12306"
+    },
+    {
+      "title": "Warren G. Harding",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 95065,
+      "id": "warren-g-harding",
+      "fame": 141,
+      "qid": "Q35286"
+    },
+    {
+      "title": "William Henry Harrison",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 58855,
+      "id": "william-henry-harrison",
+      "fame": 140,
+      "qid": "Q11869"
+    },
+    {
+      "title": "Solomon",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 57819,
+      "id": "solomon",
+      "fame": 139,
+      "qid": "Q37085"
+    },
+    {
+      "title": "Franklin Pierce",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 72476,
+      "id": "franklin-pierce",
+      "fame": 139,
+      "qid": "Q12312"
+    },
+    {
+      "title": "Rutherford B. Hayes",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 60765,
+      "id": "rutherford-b-hayes",
+      "fame": 139,
+      "qid": "Q35686"
+    },
+    {
+      "title": "Chiang Kai-shek",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 97327,
+      "id": "chiang-kai-shek",
+      "fame": 138,
+      "qid": "Q16574"
+    },
+    {
+      "title": "Nicholas II of Russia",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 120294,
+      "id": "nicholas-ii-of-russia",
+      "fame": 137,
+      "qid": "Q40787"
+    },
+    {
+      "title": "John",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 4332,
+      "id": "john",
+      "fame": 137,
+      "qid": "Q23873"
+    },
+    {
+      "title": "Benjamin Harrison",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 67568,
+      "id": "benjamin-harrison",
+      "fame": 136,
+      "qid": "Q35678"
+    },
+    {
+      "title": "Nero",
+      "signals": {
+        "ownWriting": false,
+        "recordedSpeech": true,
+        "ancientBiography": true,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [
+        "Characterisation is second-hand: an ancient biographer with a thesis, uncorroborated by the subject."
+      ],
+      "playable": true,
+      "articleChars": 45698,
+      "id": "nero",
+      "fame": 135,
+      "qid": "Q1413"
+    },
+    {
+      "title": "David Ben-Gurion",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 57149,
+      "id": "david-ben-gurion",
+      "fame": 134,
+      "qid": "Q37610"
+    },
+    {
+      "title": "Francisco Franco",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 94454,
+      "id": "francisco-franco",
+      "fame": 134,
+      "qid": "Q29179"
+    },
+    {
+      "title": "Marie Antoinette",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 66970,
+      "id": "marie-antoinette",
+      "fame": 132,
+      "qid": "Q47365"
+    },
+    {
+      "title": "David",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 41757,
+      "id": "david",
+      "fame": 132,
+      "qid": "Q41370"
+    },
+    {
+      "title": "Chester A. Arthur",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 63208,
+      "id": "chester-a-arthur",
+      "fame": 132,
+      "qid": "Q35498"
+    },
+    {
+      "title": "Maurice Maeterlinck",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 25929,
+      "id": "maurice-maeterlinck",
+      "fame": 131,
+      "qid": "Q49747"
+    },
+    {
+      "title": "Wilhelm II",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 75064,
+      "id": "wilhelm-ii",
+      "fame": 130,
+      "qid": "Q2677"
+    },
+    {
+      "title": "Josip Broz Tito",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 100510,
+      "id": "josip-broz-tito",
+      "fame": 130,
+      "qid": "Q9161"
+    },
+    {
+      "title": "Caligula",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": true,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 85157,
+      "id": "caligula",
+      "fame": 129,
+      "qid": "Q1409"
+    },
+    {
+      "title": "Abu Bakr",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 43797,
+      "id": "abu-bakr",
+      "fame": 129,
+      "qid": "Q334923"
+    },
+    {
+      "title": "Napoleon III",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 127459,
+      "id": "napoleon-iii",
+      "fame": 128,
+      "qid": "Q7721"
+    },
+    {
+      "title": "Pierre-Simon Laplace",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 72822,
+      "id": "pierre-simon-laplace",
+      "fame": 127,
+      "qid": "Q44481"
+    },
+    {
+      "title": "Louis XVI of France",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 51166,
+      "id": "louis-xvi-of-france",
+      "fame": 126,
+      "qid": "Q7732"
+    },
+    {
+      "title": "Hammurabi",
+      "signals": {
+        "ownWriting": false,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "thin",
+      "caveats": [
+        "Wikisource lists only impersonal documents (The Code of Hammurabi (1700s BCE)) — a bureaucracy, not a voice."
+      ],
+      "playable": false,
+      "articleChars": 17705,
+      "id": "hammurabi",
+      "fame": 126,
+      "qid": "Q36359"
+    },
+    {
+      "title": "Charles V",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 597,
+      "id": "charles-v",
+      "fame": 125,
+      "qid": "Q32500"
+    },
+    {
+      "title": "Paul VI",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "good",
+      "caveats": [
+        "Long article but no recorded speech or character section — deeds are documented, interiority is not."
+      ],
+      "playable": true,
+      "articleChars": 73445,
+      "id": "paul-vi",
+      "fame": 125,
+      "qid": "Q16975"
+    },
+    {
+      "title": "Frederick II of Prussia",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 67914,
+      "id": "frederick-ii-of-prussia",
+      "fame": 124,
+      "qid": "Q33550"
+    },
+    {
+      "title": "Frédéric Mistral",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "good",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 8988,
+      "id": "frederic-mistral",
+      "fame": 124,
+      "qid": "Q42596"
+    },
+    {
+      "title": "Pius XII",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 123484,
+      "id": "pius-xii",
+      "fame": 122,
+      "qid": "Q2604"
+    },
+    {
+      "title": "Mehmed II",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 71445,
+      "id": "mehmed-ii",
+      "fame": 122,
+      "qid": "Q34503"
+    },
+    {
+      "title": "George VI",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 29210,
+      "id": "george-vi",
+      "fame": 121,
+      "qid": "Q280856"
+    },
+    {
+      "title": "Pius XI",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 58117,
+      "id": "pius-xi",
+      "fame": 121,
+      "qid": "Q42323"
+    },
+    {
+      "title": "John Galsworthy",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 38937,
+      "id": "john-galsworthy",
+      "fame": 121,
+      "qid": "Q82248"
+    },
+    {
+      "title": "Justinian I",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 52593,
+      "id": "justinian-i",
+      "fame": 120,
+      "qid": "Q41866"
+    },
+    {
+      "title": "Tiberius",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": true,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 37552,
+      "id": "tiberius",
+      "fame": 118,
+      "qid": "Q1407"
+    },
+    {
+      "title": "Attila",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 36302,
+      "id": "attila",
+      "fame": 118,
+      "qid": "Q36724"
+    },
+    {
+      "title": "Henry VIII of England",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 72709,
+      "id": "henry-viii-of-england",
+      "fame": 118,
+      "qid": "Q38370"
+    },
+    {
+      "title": "Pius X",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 53732,
+      "id": "pius-x",
+      "fame": 118,
+      "qid": "Q43739"
+    },
+    {
+      "title": "Ivan the Terrible",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 52193,
+      "id": "ivan-the-terrible",
+      "fame": 117,
+      "qid": "Q7996"
+    },
+    {
+      "title": "Solon",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": true,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 35172,
+      "id": "solon",
+      "fame": 117,
+      "qid": "Q133337"
+    },
+    {
+      "title": "Haile Selassie I",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 67254,
+      "id": "haile-selassie-i",
+      "fame": 116,
+      "qid": "Q41178"
+    },
+    {
+      "title": "John Ruskin",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 104838,
+      "id": "john-ruskin",
+      "fame": 116,
+      "qid": "Q179126"
+    },
+    {
+      "title": "Trajan",
+      "signals": {
+        "ownWriting": false,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "thin",
+      "caveats": [],
+      "playable": false,
+      "articleChars": 73927,
+      "id": "trajan",
+      "fame": 115,
+      "qid": "Q1425"
+    },
+    {
+      "title": "Leo XIII",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 53477,
+      "id": "leo-xiii",
+      "fame": 115,
+      "qid": "Q43922"
+    },
+    {
+      "title": "Alexis de Tocqueville",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 54487,
+      "id": "alexis-de-tocqueville",
+      "fame": 115,
+      "qid": "Q140694"
+    },
+    {
+      "title": "Tutankhamun",
+      "signals": {
+        "ownWriting": false,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "thin",
+      "caveats": [],
+      "playable": false,
+      "articleChars": 66073,
+      "id": "tutankhamun",
+      "fame": 114,
+      "qid": "Q12154"
+    },
+    {
+      "title": "William the Conqueror",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 62972,
+      "id": "william-the-conqueror",
+      "fame": 113,
+      "qid": "Q37594"
+    },
+    {
+      "title": "Benedict XV",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 50811,
+      "id": "benedict-xv",
+      "fame": 113,
+      "qid": "Q4448"
+    },
+    {
+      "title": "Vespasian",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": true,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 26668,
+      "id": "vespasian",
+      "fame": 112,
+      "qid": "Q1419"
+    },
+    {
+      "title": "Hadrian",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 71749,
+      "id": "hadrian",
+      "fame": 112,
+      "qid": "Q1427"
+    },
+    {
+      "title": "Richard I of England",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 53157,
+      "id": "richard-i-of-england",
+      "fame": 112,
+      "qid": "Q42305"
+    },
+    {
+      "title": "Gregory I",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 545,
+      "id": "gregory-i",
+      "fame": 112,
+      "qid": "Q42827"
+    },
+    {
+      "title": "Alexander I of Russia",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [
+        "Only 2 sourced line(s) — too thin to anchor a voice."
+      ],
+      "playable": true,
+      "articleChars": 46690,
+      "id": "alexander-i-of-russia",
+      "fame": 111,
+      "qid": "Q15193"
+    },
+    {
+      "title": "Darius I",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 34621,
+      "id": "darius-i",
+      "fame": 111,
+      "qid": "Q44387"
+    },
+    {
+      "title": "Philip II of Spain",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 64653,
+      "id": "philip-ii-of-spain",
+      "fame": 110,
+      "qid": "Q34417"
+    },
+    {
+      "title": "Moshe ben Maimon",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": true
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 50369,
+      "id": "moshe-ben-maimon",
+      "fame": 110,
+      "qid": "Q127398"
+    },
+    {
+      "title": "Kublai Khan",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "good",
+      "caveats": [
+        "Long article but no recorded speech or character section — deeds are documented, interiority is not."
+      ],
+      "playable": true,
+      "articleChars": 51895,
+      "id": "kublai-khan",
+      "fame": 110,
+      "qid": "Q7523"
+    },
+    {
+      "title": "Charles I of England",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": true,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "strong",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 64325,
+      "id": "charles-i-of-england",
+      "fame": 110,
+      "qid": "Q81506"
+    },
+    {
+      "title": "Clement",
+      "signals": {
+        "ownWriting": true,
+        "recordedSpeech": false,
+        "ancientBiography": false,
+        "description": false
+      },
+      "tier": "good",
+      "caveats": [],
+      "playable": true,
+      "articleChars": 1044,
+      "id": "clement",
+      "fame": 110,
+      "qid": "Q42887"
+    }
+  ]
+}

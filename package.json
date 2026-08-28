@@ -13,7 +13,8 @@
     "engine": "npm --prefix engine run dev",
     "web": "npm --prefix web run dev",
     "dev": "node tools/dev.mjs",
-    "test": "node --test \"tools/lib/*.test.mjs\""
+    "test": "node --test \"tools/lib/*.test.mjs\"",
+    "evidence": "node tools/score-evidence.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

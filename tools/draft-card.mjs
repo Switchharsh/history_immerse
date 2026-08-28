@@ -20,6 +20,7 @@ import { config } from '../engine/src/config.js';
 import { getProvider } from '../engine/src/providers/index.js';
 import { fetchArticle, fetchQuotes } from './lib/sources.mjs';
 import { fetchClassical } from './lib/classical.mjs';
+import { assessEvidence, PLAYABLE } from './lib/evidence.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 // Wikimedia's UA policy asks for a real contact; anonymous agents get rate-limited
@@ -122,6 +123,44 @@ if (born === null) {
 if (born >= BIRTH_YEAR_CUTOFF) {
   console.error(`"${subject}" was born in ${born}. POLICY.md §1 excludes anyone born in ${BIRTH_YEAR_CUTOFF} or later.`);
   process.exit(1);
+}
+
+/**
+ * The evidence gate.
+ *
+ * A birth year before 1900 answers "is this person safely dead". It says nothing about
+ * whether the record supports a personality, and those diverge hard: sampled across the
+ * ruler roster, NO figure below 25 Wikipedia language editions had enough surviving
+ * evidence for a defensible sketch, and the old fame floor sat at 15. Ramesses II is famous
+ * in fifty languages and left no recorded speech at all.
+ *
+ * Drafting below this line does not produce a worse card. It produces a confident one that
+ * is entirely invented, which is harder to spot and worse to ship.
+ */
+const evidence = await assessEvidence(summary.title, {
+  qid: wdId,
+  hasClassicalLife: Boolean(classical?.length),
+  characterisationSections: harvested?.characterisationSections ?? [],
+  articleChars: harvested?.fullLength ?? 0,
+});
+const kinds = Object.entries(evidence.signals).filter(([, v]) => v).map(([k]) => k);
+console.error(`  evidence: ${evidence.tier.toUpperCase()} — ${kinds.join(', ') || 'nothing usable'}`);
+for (const c of evidence.caveats) console.error(`    ! ${c}`);
+
+if (!PLAYABLE.has(evidence.tier) && !argv.includes('--force')) {
+  console.error(
+    `\nRefusing to draft "${summary.title}": evidence tier is "${evidence.tier}".\n` +
+      `\nWhat is missing:\n` +
+      Object.entries(evidence.signals)
+        .map(([k, v]) => `  ${v ? '✓' : '·'} ${k}`)
+        .join('\n') +
+      `\n\nA card needs either the person's own writing, a biography devoted to them, or two\n` +
+      `independent kinds of evidence. Without that, temperament and speech_style would be\n` +
+      `the model's invention rather than anything the record supports.\n\n` +
+      `Run: node tools/score-evidence.mjs "${summary.title}"   for the full reasoning.\n` +
+      `Pass --force to draft anyway; the card will be marked low_evidence.`,
+  );
+  process.exit(2);
 }
 
 console.error(`  ${summary.title} (${born}–${died ?? '?'}), article ${article.length} chars, quotes ${quotes.length} chars`);
@@ -260,6 +299,12 @@ const card = {
   sensitivities: draft.sensitivities ?? '',
   portrait,
   portrait_credit: 'Wikimedia Commons — CHECK THE LICENSE TAG ON THE FILE PAGE',
+  evidence: {
+    tier: evidence.tier,
+    signals: evidence.signals,
+    ...(evidence.caveats.length ? { caveats: evidence.caveats } : {}),
+    ...(PLAYABLE.has(evidence.tier) ? {} : { low_evidence: true }),
+  },
   default_knowledge_cutoff: `${String(Math.abs(died ?? born + 60)).padStart(4, '0')}-01-01`,
   needs_review: true,
 };

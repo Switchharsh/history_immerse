@@ -47,6 +47,8 @@ generally **not** to AI Studio keys.
 ```bash
 npm run validate                                    # schema + policy check on all content
 npm test                                            # offline tests for the source-selection logic
+node tools/score-evidence.mjs "Ramesses II"         # can we build a personality for this figure?
+node tools/score-evidence.mjs --cards               # evidence audit of the curated roster
 node engine/scripts/preview-prompt.mjs churchill tehran-1943   # the exact prompt a figure gets
 node engine/scripts/preview-prompt.mjs caesar caesar-on-mars   # the knowledge-cutoff rule at work
 node engine/scripts/smoke.mjs empire-on-trial 10               # a whole scene in the terminal
@@ -60,12 +62,12 @@ read the prompt before touching anything else.
 ## What's here
 
 ```
-cards/          18 hand-written character cards
-scenarios/      8 scenarios — 2 historical with documented beats, 6 hypothetical
+cards/          30 hand-written character cards
+scenarios/      13 scenarios — 4 with documented historical beats, 9 hypothetical
 schemas/        JSON schemas for both
 engine/         Cloud Run service: Express, SSE, director loop, provider adapters
 web/            React + Vite + Tailwind theater UI
-tools/          validator, roster builders, card drafter, Firestore seed
+tools/          validator, roster builders, card drafter, evidence scorer, Firestore seed
 docs/ROSTER.md  how figures get in, and the three tiers
 POLICY.md       content and safety policy, written down before launch
 ```
@@ -117,7 +119,7 @@ code; the rest are documented in `docs/ROSTER.md` but not wired up.
 | [Cross-verified notable people, 3500BC–2018AD](https://doi.org/10.1038/s41597-022-01369-4) | CC BY 4.0 | 2.29M individuals; the ceiling for roster scale | no |
 | [Avalon Project, Yale](https://avalon.law.yale.edu) | free scholarly access | Primary documents behind the Tehran ground-truth beats | no |
 
-Four things worth knowing if you extend the roster:
+Five things worth knowing if you extend the roster:
 
 - **The obvious SPARQL query does not work.** Scanning `wikibase:sitelinks` against
   `wdt:P31 wd:Q5` times out on the public WDQS endpoint at every fame band and with `LIMIT`
@@ -131,6 +133,10 @@ Four things worth knowing if you extend the roster:
 - **Do not take the first N characters of an article.** Wikipedia biographies are
   chronological, so "Personality" and "Character" sit near the end — Napoleon's begins at
   character 65,748 of 88,052. `tools/lib/sources.mjs` selects sections by relevance instead.
+- **Fame is the wrong gate.** Language-edition count measures how much was written *about*
+  someone; a personality needs something to survive *of* them. Sampled across the roster, no
+  figure below 25 language editions had enough evidence for a defensible sketch — and the
+  fame floor was 15. See [POLICY.md §1b](POLICY.md) and `npm run evidence`.
 
 ## Rulers, 3000 BCE – 1900 CE
 
